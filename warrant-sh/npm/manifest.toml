@@ -1,0 +1,153 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/npm"
+tool = "npm"
+tool_version = ">=9.0"
+manifest_version = "1.0.0"
+summary = "NPM capability map"
+license = "CC0-1.0"
+source = "https://github.com/npm/cli"
+
+[transforms]
+supported = ["literal", "hostname", "glob"]
+
+[tool_policy]
+package_policy = "denylist"
+package_ecosystem = "npm"
+package_scope = "packages"
+strip_env = [
+  "NODE_OPTIONS",
+  "NODE_PATH",
+  "NPM_TOKEN",
+  "NPM_CONFIG_USERCONFIG",
+  "NPM_CONFIG_GLOBALCONFIG",
+  "NPM_CONFIG_PREFIX",
+  "NPM_CONFIG_*",
+  "npm_config_*",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "npm.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "npm.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "npm.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "npm.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "npm.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "npm.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["install"]
+capability = "npm.install"
+description = "Install packages and their dependencies"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+options = { registry = { names = ["--registry"], forms = ["separate", "equals"] } }
+scope_examples = { packages = ["lodash", "@types/node"], registry = ["https://registry.npmjs.org", "https://npm.example.com"] }
+scope_descriptions = { packages = "Which packages to install", registry = "NPM registry URL" }
+
+[[commands]]
+match = ["ci"]
+capability = "npm.ci"
+description = "Clean install from lockfile for reproducible builds"
+risk = "low"
+
+[[commands]]
+match = ["run"]
+capability = "npm.run"
+description = "Run a script defined in package.json"
+risk = "moderate"
+args = { script = 1 }
+options = { workspace = { names = ["-w", "--workspace"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { script = ["build", "test"], workspace = ["frontend", "packages/*"] }
+scope_descriptions = { script = "Which script to run", workspace = "Workspace to run the script in" }
+
+[[commands]]
+match = ["run-script"]
+capability = "npm.run"
+description = "Run a script defined in package.json"
+risk = "moderate"
+args = { script = 1 }
+options = { workspace = { names = ["-w", "--workspace"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { script = ["build", "test"], workspace = ["frontend", "packages/*"] }
+scope_descriptions = { script = "Which script to run", workspace = "Workspace to run the script in" }
+
+[[commands]]
+match = ["exec"]
+capability = "npm.exec"
+description = "Execute a package command in a local or temporary context"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["explore"]
+capability = "npm.explore"
+description = "Run a command in a package folder context"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["publish"]
+capability = "npm.publish"
+description = "Publish a package to the registry"
+risk = "high"
+default = "deny"
+options = { registry = { names = ["--registry"], forms = ["separate", "equals"] }, tag = { names = ["--tag"], forms = ["separate", "equals"] } }
+scope_examples = { registry = ["https://registry.npmjs.org", "https://npm.example.com"], tag = ["latest", "next"] }
+scope_descriptions = { registry = "NPM registry URL", tag = "Distribution tag" }
+
+[[commands]]
+match = ["login"]
+capability = "npm.login"
+description = "Authenticate with an NPM registry"
+risk = "moderate"
+
+[[commands]]
+match = ["test"]
+capability = "npm.test"
+description = "Run the project's test script"
+risk = "low"
+
+[[commands]]
+match = ["build"]
+capability = "npm.build"
+description = "Run the build script"
+risk = "low"
+
+[[commands]]
+match = ["audit"]
+capability = "npm.audit"
+description = "Check dependencies for known vulnerabilities"
+risk = "low"

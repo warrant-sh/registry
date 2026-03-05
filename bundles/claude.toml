@@ -1,0 +1,25 @@
+[bundle]
+name = "claude"
+description = "Anthropic Claude Code CLI"
+version = "1.0.0"
+
+[setup]
+guard_all_sessions = false
+shell_guard = true
+prompt_lock = true
+claude_pretool_hook = true
+
+[[agents]]
+name = "claude"
+alias = "claude"
+
+[manifests]
+include = [
+  "warrant-sh/coreutils",
+  "warrant-sh/git",
+  "warrant-sh/npm",
+  "warrant-sh/pip",
+  "warrant-sh/claude",
+  "warrant-sh/dangerous-patterns",
+  "warrant-sh/sanitize-env",
+]

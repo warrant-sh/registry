@@ -1,0 +1,137 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/uv"
+tool = "uv"
+tool_version = ">=0.4.0"
+manifest_version = "1.0.0"
+summary = "uv Python package and environment manager capability map"
+license = "CC0-1.0"
+source = "https://github.com/astral-sh/uv"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+package_policy = "denylist"
+package_ecosystem = "pypi"
+package_scope = "packages"
+strip_env = [
+  "PYTHONSTARTUP",
+  "PYTHONPATH",
+  "PYTHONHOME",
+  "PYTHONINSPECT",
+  "PYTHONUSERBASE",
+  "PYTHONEXECUTABLE",
+  "PIP_CONFIG_FILE",
+  "PIP_INDEX_URL",
+  "PIP_EXTRA_INDEX_URL",
+  "PIP_TRUSTED_HOST",
+  "UV_INDEX_URL",
+  "UV_EXTRA_INDEX_URL",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "uv.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "uv.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "uv.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "uv.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "uv.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "uv.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["add"]
+capability = "uv.add"
+description = "Add Python dependencies to the project"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["requests", "ruff"] }
+scope_descriptions = { packages = "Which packages to add" }
+
+[[commands]]
+match = ["remove"]
+capability = "uv.remove"
+description = "Remove Python dependencies from the project"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["requests", "ruff"] }
+scope_descriptions = { packages = "Which packages to remove" }
+
+[[commands]]
+match = ["sync"]
+capability = "uv.sync"
+description = "Sync environment to project lockfile"
+risk = "moderate"
+
+[[commands]]
+match = ["run"]
+capability = "uv.run"
+description = "Run a command inside a uv-managed environment"
+risk = "moderate"
+
+[[commands]]
+match = ["venv"]
+capability = "uv.venv"
+description = "Create or manage Python virtual environments"
+risk = "low"
+
+[[commands]]
+match = ["python"]
+capability = "uv.python"
+description = "Manage Python versions and interpreters"
+risk = "moderate"
+
+[[commands]]
+match = ["pip", "install"]
+capability = "uv.pip_install"
+description = "Install packages via uv pip compatibility interface"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+options = { index = { names = ["-i", "--index-url"], forms = ["separate", "equals", "attached"] }, extra_index = { names = ["--extra-index-url"], forms = ["separate", "equals"] }, requirements = { names = ["-r", "--requirement"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { packages = ["fastapi", "uvicorn"], index = ["https://pypi.org/simple", "https://pypi.example.com/simple"], extra_index = ["https://download.pytorch.org/whl/cu121"], requirements = ["requirements.txt", "./req/prod.txt"] }
+scope_descriptions = { packages = "Which packages to install", index = "Primary package index URL", extra_index = "Additional package index URLs", requirements = "Requirements file to install from" }
+
+[[commands]]
+match = ["pip", "uninstall"]
+capability = "uv.pip_uninstall"
+description = "Uninstall packages via uv pip compatibility interface"
+risk = "moderate"
+
+[[commands]]
+match = ["pip", "freeze"]
+capability = "uv.pip_freeze"
+description = "List installed packages in requirements format"
+risk = "low"

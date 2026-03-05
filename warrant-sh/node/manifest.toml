@@ -1,0 +1,228 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/node"
+tool = "node"
+tool_version = ">=18.0"
+manifest_version = "1.0.0"
+summary = "Node.js interpreter and common development tools"
+license = "CC0-1.0"
+source = "https://nodejs.org/"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+allow_inline_execution = true
+package_policy = "denylist"
+package_ecosystem = "npm"
+package_scope = "packages"
+strip_env = [
+  "NODE_OPTIONS",
+  "NODE_PATH",
+  "NODE_EXTRA_CA_CERTS",
+  "NODE_REDIRECT_WARNINGS",
+  "NODE_REPL_HISTORY",
+  "NPM_CONFIG_GLOBALCONFIG",
+  "NPM_CONFIG_USERCONFIG",
+  "NPM_CONFIG_REGISTRY",
+]
+
+# ── Interpreters ─────────────────────────────────
+
+[[commands]]
+match = ["--help"]
+capability = "node.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "node.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "node.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "node.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "node.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "node.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["node"]
+capability = "interpreter.node"
+description = "Run the Node.js runtime"
+risk = "high"
+default = "allow"
+
+[[commands]]
+match = ["nodejs"]
+capability = "interpreter.nodejs"
+description = "Run the Node.js runtime (nodejs alias)"
+risk = "high"
+default = "allow"
+
+# ── Package management ───────────────────────────
+
+[[commands]]
+match = ["npx"]
+capability = "node.npx"
+description = "Execute npm packages without installing"
+risk = "high"
+default = "deny"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+
+[[commands]]
+match = ["yarn"]
+capability = "node.yarn"
+description = "Yarn package manager"
+risk = "moderate"
+default = "allow"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+
+[[commands]]
+match = ["pnpm"]
+capability = "node.pnpm"
+description = "pnpm package manager"
+risk = "moderate"
+default = "allow"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+
+[[commands]]
+match = ["bun"]
+capability = "node.bun"
+description = "Bun JavaScript runtime and package manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["corepack"]
+capability = "node.corepack"
+description = "Node.js package manager version manager"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["nvm"]
+capability = "node.nvm"
+description = "Node Version Manager"
+risk = "low"
+default = "allow"
+
+# ── Build & transpile ────────────────────────────
+
+[[commands]]
+match = ["tsc"]
+capability = "node.tsc"
+description = "TypeScript compiler"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["tsx"]
+capability = "node.tsx"
+description = "TypeScript execute — run TS files directly"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["esbuild"]
+capability = "node.esbuild"
+description = "JavaScript/TypeScript bundler"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["vite"]
+capability = "node.vite"
+description = "Next-generation frontend build tool"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["webpack"]
+capability = "node.webpack"
+description = "JavaScript module bundler"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rollup"]
+capability = "node.rollup"
+description = "JavaScript module bundler"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["turbo"]
+capability = "node.turbo"
+description = "Turborepo — monorepo build system"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["next"]
+capability = "node.next"
+description = "Next.js CLI"
+risk = "moderate"
+default = "allow"
+
+# ── Testing & quality ────────────────────────────
+
+[[commands]]
+match = ["jest"]
+capability = "node.jest"
+description = "JavaScript testing framework"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["vitest"]
+capability = "node.vitest"
+description = "Vite-native testing framework"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["eslint"]
+capability = "node.eslint"
+description = "JavaScript/TypeScript linter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["prettier"]
+capability = "node.prettier"
+description = "Code formatter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["biome"]
+capability = "node.biome"
+description = "Formatter and linter for web projects"
+risk = "low"
+default = "allow"

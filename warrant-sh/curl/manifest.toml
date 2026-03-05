@@ -1,0 +1,107 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/curl"
+tool = "curl"
+tool_version = ">=8.0"
+manifest_version = "1.0.0"
+summary = "curl network and upload capability map"
+license = "CC0-1.0"
+source = "https://github.com/curl/curl"
+
+[transforms]
+supported = ["literal", "path", "hostname", "glob"]
+
+[tool_policy]
+deny_flags = ["-K", "--config", "--connect-to", "--resolve", "--socks4", "--socks4a", "--socks5", "--socks5-hostname", "--preproxy", "--proxy", "--unix-socket", "--abstract-unix-socket", "--dns-servers", "--doh-url", "--dns-interface", "--netrc", "--netrc-optional", "--netrc-file"]
+strip_env = [
+  "CURL_HOME",
+  "CURL_CA_BUNDLE",
+  "SSL_CERT_FILE",
+  "SSL_CERT_DIR",
+  "http_proxy",
+  "https_proxy",
+  "all_proxy",
+  "ftp_proxy",
+  "HTTP_PROXY",
+  "HTTPS_PROXY",
+  "ALL_PROXY",
+  "FTP_PROXY",
+  "NO_PROXY",
+  "no_proxy",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "curl.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "curl.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "curl.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "curl.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "curl.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "curl.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "network.request"
+label = "HTTP Request"
+description = "Make an HTTP request to a remote server"
+risk = "moderate"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+
+[[commands]]
+match = []
+when_any_flags = ["-d", "--data", "--data-raw", "--data-binary", "--data-ascii", "--data-urlencode", "--json", "-F", "--form", "-T", "--upload-file"]
+capability = "network.upload"
+label = "Upload Data"
+description = "Send data to a remote server via POST or form upload"
+risk = "high"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+
+[[commands]]
+match = []
+when_any_flags = ["-o", "-O", "--output", "--remote-name"]
+capability = "files.write"
+label = "Write to Disk"
+description = "Save downloaded content to a local file"
+risk = "moderate"
+options = { paths = { names = ["-o", "--output"], forms = ["separate", "equals", "attached"] } }
+scopes = [
+  { key = "paths", from = "output_paths", transform = "path" },
+  { key = "paths", from = "redirect_stdout_paths", transform = "path" },
+]
+scope_examples = { paths = ["./download.tar.gz", "/tmp/output.json"] }
+scope_descriptions = { paths = "Allowed output file paths" }

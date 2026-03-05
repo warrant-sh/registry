@@ -1,0 +1,39 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/sanitize-env"
+tool = "sanitize-env"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Strip dangerous environment variables before command execution"
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/sanitize-env"
+
+[transforms]
+supported = ["glob", "literal"]
+
+[[commands]]
+match = []
+capability = "policy.environment_strip"
+label = "Environment Sanitization"
+description = "Remove dangerous environment variables before commands execute"
+risk = "low"
+default = "allow"
+scope = { key = "strip", from = "arg_rest", transform = "glob", examples = ["LD_PRELOAD", "BASH_ENV", "HTTP_PROXY", "BASH_FUNC_*"] }
+scope_defaults = { strip = [
+  "LD_PRELOAD",
+  "LD_LIBRARY_PATH",
+  "DYLD_INSERT_LIBRARIES",
+  "DYLD_LIBRARY_PATH",
+  "BASH_ENV",
+  "ENV",
+  "BASH_FUNC_*",
+  "http_proxy",
+  "https_proxy",
+  "all_proxy",
+  "ftp_proxy",
+  "HTTP_PROXY",
+  "HTTPS_PROXY",
+  "ALL_PROXY",
+  "FTP_PROXY",
+] }
+scope_descriptions = { strip = "Environment variable patterns to remove" }

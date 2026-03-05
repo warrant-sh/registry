@@ -1,0 +1,171 @@
+[registry]
+schema = "warrant.registry.v1"
+updated = "2026-02-27T09:30:00Z"
+
+[[manifests]]
+id = "warrant-sh/cargo"
+path = "warrant-sh/cargo/manifest.toml"
+version = "1.0.0"
+hash = "sha256:a73de7c97f1f3e343b5a6e5226ccd9a38caf10379ce454f46118b0ae6b148ad4"
+
+[[manifests]]
+id = "warrant-sh/claude"
+path = "warrant-sh/claude/manifest.toml"
+version = "1.0.0"
+hash = "sha256:81f7340b25b756b4d5c12a29fc95c8d6c8b867485f00869d17b3c6deb300639e"
+
+[[manifests]]
+id = "warrant-sh/codex"
+path = "warrant-sh/codex/manifest.toml"
+version = "1.0.0"
+hash = "sha256:e8f82765c6c1caec8792f6d05bb57a07f140ebc57bcb110792915700b857bf87"
+
+[[manifests]]
+id = "warrant-sh/coreutils"
+path = "warrant-sh/coreutils/manifest.toml"
+version = "1.0.0"
+hash = "sha256:96b4c7180f47144703836b39ca4693845e67a8b81b23351f2d8760428e99bead"
+
+[[manifests]]
+id = "warrant-sh/curl"
+path = "warrant-sh/curl/manifest.toml"
+version = "1.0.0"
+hash = "sha256:052334d6deebe4e04cb820a14e33f6f3778bd8be59a1252d8728c9a21a683a35"
+
+[[manifests]]
+id = "warrant-sh/dangerous-patterns"
+path = "warrant-sh/dangerous-patterns/manifest.toml"
+version = "1.0.0"
+hash = "sha256:0f952318b781719a807b6f46ddc2cb8a2674bca766faf07fc014304d102fc478"
+
+[[manifests]]
+id = "warrant-sh/docker"
+path = "warrant-sh/docker/manifest.toml"
+version = "1.0.0"
+hash = "sha256:e2c4095f1d2a7bfb630e349dfa334ed902b9752d6afd7d43996ae0d8032d413a"
+
+[[manifests]]
+id = "warrant-sh/git"
+path = "warrant-sh/git/manifest.toml"
+version = "1.0.0"
+hash = "sha256:bb1e50667400087c6cd0bdca079dd4540d17fbb5bb45b98b6dd853bb564c9226"
+
+[[manifests]]
+id = "warrant-sh/go"
+path = "warrant-sh/go/manifest.toml"
+version = "1.0.0"
+hash = "sha256:d83e2e690bcc05f4fa0b630c2e5b88dfd3bacc7b5ce473ebdddef4d1aefd0f92"
+
+[[manifests]]
+id = "warrant-sh/gog"
+path = "warrant-sh/gog/manifest.toml"
+version = "1.0.0"
+hash = "sha256:0a6bf700d3dab8f16feb11c61ae4f4b3f38a7fd5837b48cd932ad05cc95769ca"
+
+[[manifests]]
+id = "warrant-sh/node"
+path = "warrant-sh/node/manifest.toml"
+version = "1.0.0"
+hash = "sha256:578ca05397697812679ea1fbd5ff2a3857a171d2e91d60ef76034f1f3dc509b4"
+
+[[manifests]]
+id = "warrant-sh/npm"
+path = "warrant-sh/npm/manifest.toml"
+version = "1.0.0"
+hash = "sha256:48cc21720b45e92cfb4e3570bf82abf7c0a06d1e2eb84369626d796738c9b6a2"
+
+[[manifests]]
+id = "warrant-sh/python"
+path = "warrant-sh/python/manifest.toml"
+version = "1.0.0"
+hash = "sha256:6178f6183ce61a88015e2a300ff9118edf6d18af15862ea56c30fc7b82edde7f"
+
+[[manifests]]
+id = "warrant-sh/pip"
+path = "warrant-sh/pip/manifest.toml"
+version = "1.0.0"
+hash = "sha256:e398f5747dcb5688792d16fbbb42b2c339700f5199217a99ff70e84ba3aa4aab"
+
+[[manifests]]
+id = "warrant-sh/ruby"
+path = "warrant-sh/ruby/manifest.toml"
+version = "1.0.0"
+hash = "sha256:c6b3cc05669198bfb3fdadc256b98604299448fa1d136195e4a9ce514b55943c"
+
+[[manifests]]
+id = "warrant-sh/rust"
+path = "warrant-sh/rust/manifest.toml"
+version = "1.0.0"
+hash = "sha256:44d73cee7da25db119f95a99a0841cd56feee520f5a6f5c10d7f7bf9d3ac4b5e"
+
+[[manifests]]
+id = "warrant-sh/sanitize-env"
+path = "warrant-sh/sanitize-env/manifest.toml"
+version = "1.0.0"
+hash = "sha256:2b5585b2d1de64a5a8c3658010a257737435abd699e158bce6a3ee25c8987534"
+
+[[manifests]]
+id = "warrant-sh/ssh"
+path = "warrant-sh/ssh/manifest.toml"
+version = "1.0.0"
+hash = "sha256:d5746eef7b0d36ee0d7eb1cf79abbb6e67b0ce1727e9cdb50e2f93a9ec445d74"
+
+[[manifests]]
+id = "warrant-sh/strict-paths"
+path = "warrant-sh/strict-paths/manifest.toml"
+version = "1.0.0"
+hash = "sha256:67f61293aa1715c92703bf9db1d4117a7a9a08ceeb5a7c0b921b398095916c36"
+
+[[manifests]]
+id = "warrant-sh/tmux"
+path = "warrant-sh/tmux/manifest.toml"
+version = "1.0.0"
+hash = "sha256:633d65a326eb662a72a644cc7912913640fc4c8cd1e2f2202649ed8cf70f1b6a"
+
+[[manifests]]
+id = "warrant-sh/uv"
+path = "warrant-sh/uv/manifest.toml"
+version = "1.0.0"
+hash = "sha256:a9c671bea04f0da5e09a5032810a4bb9d5284368e753d5a15960a104afb65d88"
+
+[[manifests]]
+id = "warrant-sh/wget"
+path = "warrant-sh/wget/manifest.toml"
+version = "1.0.0"
+hash = "sha256:38d86b0cd398a966afc9029a28fa38de40f3a8af675b5ea89524f3e0c56655b3"
+
+[[bundles]]
+id = "codex"
+path = "bundles/codex.toml"
+version = "1.0.0"
+hash = "sha256:49fa6b335232faa7e6f0e1996da66eed2ed8e27bbd5ff17138adc8407be4b4a2"
+
+[[bundles]]
+id = "claude"
+path = "bundles/claude.toml"
+version = "1.0.0"
+hash = "sha256:a73c7f46867286c4a032c9e3d49b37c25ae9fcf32b3db62d73a5c957e73b2e24"
+
+[[bundles]]
+id = "python"
+path = "bundles/python.toml"
+version = "1.0.0"
+hash = "sha256:e0b7228005571e287871abbccc53423eca67c960cf44662cf8051f9301cc7685"
+
+[[bundles]]
+id = "rust"
+path = "bundles/rust.toml"
+version = "1.0.0"
+hash = "sha256:dde772f277424c075df87b91f34c7da300e76cee627143a7d7b74e2d5893233c"
+
+[[bundles]]
+id = "node"
+path = "bundles/node.toml"
+version = "1.0.0"
+hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
+
+[[bundles]]
+id = "go"
+path = "bundles/go.toml"
+version = "1.0.0"
+hash = "sha256:01c612d9f86ccddd415cb49940a2e5235a432f8e1cc838885c41478fc63eff35"

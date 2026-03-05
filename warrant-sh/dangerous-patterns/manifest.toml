@@ -1,0 +1,40 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/dangerous-patterns"
+tool = "dangerous-patterns"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Block dangerous command patterns"
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/dangerous-patterns"
+
+[transforms]
+supported = ["glob", "literal"]
+
+[[commands]]
+match = []
+capability = "policy.commands_block"
+label = "Blocked Commands"
+description = "Glob patterns matched against full command strings to block dangerous operations"
+risk = "low"
+default = "allow"
+scope = { key = "patterns", from = "arg_rest", transform = "glob" }
+scope_defaults = { patterns = [
+  "rm -rf /",
+  "rm -rf /*",
+  "rm -rf ~",
+  "rm -rf ~/*",
+  "chmod -R 777 /",
+  "chmod -R 777 /*",
+  "dd if=* of=/dev/sd*",
+  "dd if=* of=/dev/nvme*",
+  "mkfs*",
+  "> /dev/sd*",
+  "curl * | bash",
+  "curl * | sh",
+  "wget * | bash",
+  "wget * | sh",
+  "curl * | sudo bash",
+  "curl * | sudo sh",
+] }
+scope_descriptions = { patterns = "Glob patterns to block (matched against full command string)" }

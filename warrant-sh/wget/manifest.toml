@@ -1,0 +1,64 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/wget"
+tool = "wget"
+tool_version = ">=1.21"
+manifest_version = "1.0.0"
+summary = "wget network and download capability map"
+license = "CC0-1.0"
+source = "https://www.gnu.org/software/wget/"
+
+[transforms]
+supported = ["literal", "hostname", "path", "glob"]
+
+[tool_policy]
+deny_flags = ["-e", "--execute", "--config", "--post-file", "--post-data", "--header", "--load-cookies", "-i", "--input-file"]
+strip_env = ["WGETRC", "http_proxy", "HTTP_PROXY", "https_proxy", "HTTPS_PROXY", "ftp_proxy", "FTP_PROXY", "no_proxy", "NO_PROXY", "all_proxy", "ALL_PROXY"]
+
+[[commands]]
+match = ["--help"]
+capability = "wget.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "wget.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "network.request"
+label = "HTTP Request"
+description = "Fetch content from a remote server"
+risk = "moderate"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+
+[[commands]]
+match = []
+when_any_flags = ["--post-data", "--post-file", "--body-data", "--body-file"]
+capability = "network.upload"
+label = "Upload Data"
+description = "Send request body data to a remote server"
+risk = "high"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+
+[[commands]]
+match = []
+when_any_flags = ["-O", "-o", "--output-document"]
+capability = "files.write"
+label = "Write to Disk"
+description = "Save downloaded content to a local file"
+risk = "moderate"
+options = { paths = { names = ["-O", "--output-document"], forms = ["separate", "attached", "equals"] } }
+scopes = [
+  { key = "paths", from = "output_paths", transform = "path" },
+  { key = "paths", from = "redirect_stdout_paths", transform = "path" },
+]
+scope_examples = { paths = ["./download.tar.gz", "/tmp/output.json"] }
+scope_descriptions = { paths = "Allowed output file paths" }

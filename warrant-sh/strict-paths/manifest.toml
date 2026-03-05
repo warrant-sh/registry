@@ -1,0 +1,23 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/strict-paths"
+tool = "strict-paths"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Restrict resolved executable paths to common system directories"
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/strict-paths"
+
+[transforms]
+supported = ["glob", "literal"]
+
+[[commands]]
+match = []
+capability = "policy.commands_paths"
+label = "Executable Paths"
+description = "Restrict which directories executables can be resolved from"
+risk = "low"
+default = "allow"
+scope = { key = "paths", from = "arg_rest", transform = "glob", examples = ["/usr/bin/**", "/bin/**", "/usr/local/bin/**"] }
+scope_defaults = { paths = ["/usr/bin/**", "/bin/**", "/usr/sbin/**", "/sbin/**", "/usr/local/bin/**", "/usr/local/sbin/**"] }
+scope_descriptions = { paths = "Allowed executable directory patterns" }

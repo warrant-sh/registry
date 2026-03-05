@@ -1,0 +1,150 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/docker"
+tool = "docker"
+tool_version = ">=25.0"
+manifest_version = "1.0.0"
+summary = "Docker runtime and image capability map"
+license = "CC0-1.0"
+source = "https://github.com/docker/cli"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+deny_flags = ["--privileged", "--cap-add", "--security-opt", "--pid", "--device", "--userns", "--ipc", "--uts", "--cgroup-parent", "--volumes-from"]
+deny_flags_description = "Block flags that weaken container isolation"
+strip_env = [
+  "DOCKER_HOST",
+  "DOCKER_CONTEXT",
+  "DOCKER_CONFIG",
+  "DOCKER_CERT_PATH",
+  "DOCKER_TLS_VERIFY",
+  "DOCKER_API_VERSION",
+  "BUILDKIT_HOST",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "docker.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "docker.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "docker.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "docker.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "docker.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "docker.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["build"]
+capability = "docker.build"
+description = "Build a Docker image from a Dockerfile"
+risk = "moderate"
+scope = { key = "context", from = "arg_last", transform = "path" }
+options = { dockerfile = { names = ["-f", "--file"], forms = ["separate", "equals", "attached"] }, tags = { names = ["-t", "--tag"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { context = [".", "./services/api"], dockerfile = ["Dockerfile", "./docker/Dockerfile.prod"], tags = ["myorg/api:latest"] }
+scope_descriptions = { context = "Build context directory", dockerfile = "Path to Dockerfile", tags = "Image tag to apply" }
+
+[[commands]]
+match = ["pull"]
+capability = "docker.pull"
+description = "Download an image from a registry"
+risk = "low"
+scope = { key = "images", from = "arg_rest", transform = "literal" }
+scope_examples = { images = ["alpine:latest", "ghcr.io/org/app:1.2.3"] }
+scope_descriptions = { images = "Which images to pull" }
+
+[[commands]]
+match = ["push"]
+capability = "docker.push"
+description = "Upload an image to a registry"
+risk = "high"
+scope = { key = "images", from = "arg_rest", transform = "literal" }
+scope_examples = { images = ["myorg/api:latest", "ghcr.io/org/app:1.2.3"] }
+scope_descriptions = { images = "Which images to push" }
+
+[[commands]]
+match = ["run"]
+capability = "docker.run"
+description = "Create and start a new container"
+risk = "high"
+scopes = [
+  { key = "image", from = "arg_image", transform = "literal" },
+  { key = "volume_sources", from = "volume_sources", transform = "path" },
+]
+options = { network = { names = ["--network"], forms = ["separate", "equals"] }, env_vars = { names = ["-e", "--env"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { image = ["alpine:latest", "ghcr.io/org/app:1.2.3"], volume_sources = ["./data", "/var/log"], network = ["host", "bridge"], env_vars = ["ENV=prod"] }
+scope_descriptions = { image = "Container image to run", volume_sources = "Host paths mounted into the container", network = "Docker network to attach", env_vars = "Environment variables passed to the container" }
+
+[[commands]]
+match = ["run"]
+when_any_flags = ["--network"]
+capability = "docker.run_network"
+description = "Run a container with explicit Docker network mode selection"
+risk = "high"
+default = "deny"
+scopes = [
+  { key = "image", from = "arg_image", transform = "literal" },
+]
+options = { network = { names = ["--network"], forms = ["separate", "equals"] } }
+scope_examples = { image = ["alpine:latest", "ghcr.io/org/app:1.2.3"], network = ["bridge", "none", "host"] }
+scope_descriptions = { image = "Container image to run", network = "Allowed Docker network modes for docker run" }
+
+[[commands]]
+match = ["exec"]
+capability = "docker.exec"
+description = "Run a command inside a running container"
+risk = "moderate"
+args = { container = 1 }
+scope_examples = { container = ["api-container", "db-1"] }
+scope_descriptions = { container = "Target container name or ID" }
+
+[[commands]]
+match = ["cp"]
+capability = "docker.cp"
+description = "Copy files or directories between the host and a container"
+risk = "high"
+default = "deny"
+scopes = [
+  { key = "source", from = "arg", index = 1, transform = "literal" },
+  { key = "destination", from = "arg", index = 2, transform = "literal" },
+]
+scope_examples = { source = ["./local/file.txt", "container:/var/log/app.log"], destination = ["container:/tmp/file.txt", "./downloads/app.log"] }
+scope_descriptions = { source = "Allowed source endpoint for docker cp", destination = "Allowed destination endpoint for docker cp" }
+
+[[commands]]
+match = ["compose"]
+capability = "docker.compose"
+description = "Manage multi-container applications with Docker Compose"
+risk = "moderate"

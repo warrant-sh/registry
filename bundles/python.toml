@@ -1,0 +1,19 @@
+[bundle]
+name = "python"
+description = "Python development toolchain"
+version = "1.0.0"
+
+[setup]
+guard_all_sessions = false
+shell_guard = false
+prompt_lock = true
+
+[manifests]
+include = [
+  "warrant-sh/coreutils",
+  "warrant-sh/python",
+  "warrant-sh/pip",
+  "warrant-sh/uv",
+  "warrant-sh/dangerous-patterns",
+  "warrant-sh/sanitize-env",
+]

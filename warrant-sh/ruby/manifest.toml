@@ -1,0 +1,170 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/ruby"
+tool = "ruby"
+tool_version = ">=3.0"
+manifest_version = "1.0.0"
+summary = "Ruby interpreter and common development tools"
+license = "CC0-1.0"
+source = "https://www.ruby-lang.org/"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+allow_inline_execution = true
+package_policy = "denylist"
+package_ecosystem = "rubygems"
+package_scope = "packages"
+strip_env = [
+  "RUBYOPT",
+  "RUBYLIB",
+  "RUBYPATH",
+  "GEM_HOME",
+  "GEM_PATH",
+  "BUNDLE_PATH",
+  "BUNDLE_GEMFILE",
+  "BUNDLE_WITHOUT",
+]
+
+# ── Interpreter ──────────────────────────────────
+
+[[commands]]
+match = ["--help"]
+capability = "ruby.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "ruby.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "ruby.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "ruby.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "ruby.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "ruby.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["ruby"]
+capability = "interpreter.ruby"
+description = "Run the Ruby interpreter"
+risk = "high"
+default = "allow"
+
+[[commands]]
+match = ["irb"]
+capability = "ruby.irb"
+description = "Interactive Ruby shell"
+risk = "high"
+default = "allow"
+
+# ── Package & environment management ─────────────
+
+[[commands]]
+match = ["gem"]
+capability = "ruby.gem"
+description = "RubyGems package manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["gem", "install"]
+capability = "ruby.gem_install"
+description = "Install Ruby gems"
+risk = "moderate"
+default = "allow"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["rails", "bundler"] }
+scope_descriptions = { packages = "Which gems to install" }
+
+[[commands]]
+match = ["bundle"]
+capability = "ruby.bundle"
+description = "Bundler dependency manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["bundler"]
+capability = "ruby.bundler"
+description = "Bundler dependency manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["rbenv"]
+capability = "ruby.rbenv"
+description = "Ruby version manager"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rvm"]
+capability = "ruby.rvm"
+description = "Ruby Version Manager"
+risk = "low"
+default = "allow"
+
+# ── Frameworks & tools ───────────────────────────
+
+[[commands]]
+match = ["rails"]
+capability = "ruby.rails"
+description = "Ruby on Rails CLI"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["rake"]
+capability = "ruby.rake"
+description = "Ruby build utility"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["rspec"]
+capability = "ruby.rspec"
+description = "Ruby testing framework"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rubocop"]
+capability = "ruby.rubocop"
+description = "Ruby linter and formatter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["solargraph"]
+capability = "ruby.solargraph"
+description = "Ruby language server"
+risk = "low"
+default = "allow"

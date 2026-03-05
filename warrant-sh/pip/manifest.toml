@@ -1,0 +1,103 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/pip"
+tool = "pip"
+tool_version = ">=23.0"
+manifest_version = "1.0.0"
+summary = "pip package management capability map"
+license = "CC0-1.0"
+source = "https://github.com/pypa/pip"
+
+[transforms]
+supported = ["literal", "hostname", "glob"]
+
+[tool_policy]
+deny_flags = ["-e", "--editable"]
+package_policy = "denylist"
+package_ecosystem = "pypi"
+package_scope = "packages"
+strip_env = [
+  "PYTHONSTARTUP",
+  "PYTHONPATH",
+  "PYTHONHOME",
+  "PYTHONINSPECT",
+  "PYTHONUSERBASE",
+  "PYTHONEXECUTABLE",
+  "PIP_CONFIG_FILE",
+  "PIP_INDEX_URL",
+  "PIP_EXTRA_INDEX_URL",
+  "PIP_TRUSTED_HOST",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "pip.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "pip.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "pip.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "pip.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "pip.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "pip.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["install"]
+capability = "pip.install"
+description = "Install Python packages from PyPI or a custom index"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+options = { index = { names = ["-i", "--index-url"], forms = ["separate", "equals", "attached"] }, extra_index = { names = ["--extra-index-url"], forms = ["separate", "equals"] }, requirements = { names = ["-r", "--requirement"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { packages = ["requests", "uvicorn"], index = ["https://pypi.org/simple", "https://pypi.example.com/simple"], extra_index = ["https://download.pytorch.org/whl/cu121"], requirements = ["requirements.txt", "./req/prod.txt"] }
+scope_descriptions = { packages = "Which packages to install", index = "Primary package index URL", extra_index = "Additional package index URLs", requirements = "Requirements file to install from" }
+
+[[commands]]
+match = ["uninstall"]
+capability = "pip.uninstall"
+description = "Remove installed Python packages"
+risk = "moderate"
+
+[[commands]]
+match = ["freeze"]
+capability = "pip.freeze"
+description = "List installed packages in requirements format"
+risk = "low"
+
+[[commands]]
+match = ["download"]
+capability = "pip.download"
+description = "Download packages without installing them"
+risk = "low"
+options = { dest = { names = ["-d", "--dest"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { dest = ["./wheelhouse", "/tmp/pip-cache"] }
+scope_descriptions = { dest = "Destination directory for downloaded packages" }

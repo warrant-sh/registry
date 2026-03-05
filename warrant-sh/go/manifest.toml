@@ -1,0 +1,129 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/go"
+tool = "go"
+tool_version = ">=1.20"
+manifest_version = "1.0.0"
+summary = "Go capability map"
+license = "CC0-1.0"
+source = "https://go.dev/"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+package_policy = "denylist"
+package_ecosystem = "go"
+package_scope = "modules"
+strip_env = [
+  "GOFLAGS",
+  "GOWORK",
+  "GOMOD",
+  "GOENV",
+  "GOROOT",
+  "GOPATH",
+  "GOPROXY",
+  "GONOPROXY",
+  "GOSUMDB",
+  "GONOSUMDB",
+  "GOPRIVATE",
+  "GOINSECURE",
+  "GOTOOLCHAIN",
+  "CGO_*",
+  "CC",
+  "CXX",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "go.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "go.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "go.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "go.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "go.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "go.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["build"]
+capability = "go.build"
+description = "Compile Go packages and dependencies"
+risk = "low"
+scope = { key = "modules", from = "arg_rest", transform = "literal" }
+options = { output = { names = ["-o"], forms = ["separate", "attached"] } }
+scope_examples = { modules = ["./...", "./cmd/api"], output = ["./bin/app"] }
+scope_descriptions = { modules = "Which packages to build", output = "Output binary path" }
+
+[[commands]]
+match = ["test"]
+capability = "go.test"
+description = "Run tests for Go packages"
+risk = "low"
+scope = { key = "modules", from = "arg_rest", transform = "literal" }
+scope_examples = { modules = ["./...", "./pkg/service"] }
+scope_descriptions = { modules = "Which packages to test" }
+
+[[commands]]
+match = ["get"]
+capability = "go.get"
+description = "Download and install modules and dependencies"
+risk = "moderate"
+scope = { key = "modules", from = "arg_rest", transform = "literal" }
+scope_examples = { modules = ["github.com/pkg/errors", "example.com/mod@v1.2.3"] }
+scope_descriptions = { modules = "Which modules to download" }
+
+[[commands]]
+match = ["mod"]
+capability = "go.mod"
+label = "Go Modules"
+description = "Manage go.mod and module dependencies"
+risk = "low"
+
+[[commands]]
+match = ["run"]
+capability = "go.run"
+description = "Compile and run a Go program"
+risk = "moderate"
+scope = { key = "modules", from = "arg_rest", transform = "literal" }
+scope_examples = { modules = ["./cmd/server", "main.go"] }
+scope_descriptions = { modules = "Go files or packages to run" }
+
+[[commands]]
+match = ["install"]
+capability = "go.install"
+description = "Compile and install Go packages"
+risk = "moderate"
+default = "deny"
+scope = { key = "modules", from = "arg_rest", transform = "literal" }

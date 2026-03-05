@@ -1,0 +1,42 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/coreutils"
+tool = "coreutils"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Allow common system utilities — read-only and low-risk commands"
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/coreutils"
+
+[transforms]
+supported = ["literal"]
+
+[[commands]]
+match = []
+capability = "policy.commands_allow"
+label = "Allowed Programs"
+description = "Programs added to the commands allowlist"
+risk = "low"
+default = "allow"
+scope = { key = "programs", from = "arg_rest", transform = "literal" }
+scope_defaults = { programs = [
+  "ls", "cat", "head", "tail", "less", "more", "wc", "file", "stat",
+  "find", "which", "whereis", "whoami", "id", "groups",
+  "date", "cal", "uptime", "uname", "hostname",
+  "echo", "printf", "true", "false", "yes",
+  "pwd", "realpath", "dirname", "basename",
+  "printenv",
+  "diff", "cmp", "comm", "sort", "uniq", "tr", "cut", "paste",
+  "grep", "egrep", "fgrep", "rg", "ag",
+  "awk", "sed",
+  "tee", "xargs",
+  "du", "df",
+  "md5sum", "sha256sum", "shasum",
+  "tree", "bat",
+  "cp", "mv", "mkdir", "touch", "ln",
+  "install", "rsync",
+  "tar", "zip", "unzip", "gzip", "gunzip", "bzip2", "xz",
+  "chmod", "chown", "chgrp",
+  "make", "cmake",
+] }
+scope_descriptions = { programs = "Programs to add to the commands allowlist" }

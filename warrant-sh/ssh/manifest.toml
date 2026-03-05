@@ -1,0 +1,98 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/ssh"
+tool = "ssh"
+tool_version = ">=9.0"
+manifest_version = "1.0.0"
+summary = "SSH/scp/sftp capability map"
+license = "CC0-1.0"
+source = "https://www.openssh.com/"
+
+[transforms]
+supported = ["literal", "hostname", "path", "glob"]
+
+[tool_policy]
+deny_flags = ["-o", "-F", "-J", "-W", "-L", "-R", "-D", "-S"]
+strip_env = [
+  "SSH_AUTH_SOCK",
+  "SSH_AGENT_PID",
+  "SSH_ASKPASS",
+  "SSH_SK_PROVIDER",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "ssh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "ssh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "ssh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "ssh.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "ssh.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "ssh.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "ssh.connect"
+description = "Open an SSH connection to a remote host"
+risk = "high"
+scope = { key = "hosts", from = "arg_rest", transform = "hostname" }
+options = { identity_file = { names = ["-i"], forms = ["separate", "attached"] }, port = { names = ["-p"], forms = ["separate", "attached"] } }
+scope_examples = { hosts = ["github.com", "user@server.example.com"], identity_file = ["~/.ssh/id_ed25519"], port = ["22", "2222"] }
+scope_descriptions = { hosts = "Allowed remote hosts", identity_file = "SSH key to use", port = "Port to connect on" }
+
+[[commands]]
+match = ["scp"]
+capability = "ssh.scp"
+label = "Secure Copy"
+description = "Copy files between hosts over SSH"
+risk = "high"
+scopes = [
+  { key = "endpoints", from = "arg_rest", transform = "literal" },
+  { key = "hosts", from = "arg_rest", transform = "hostname" },
+]
+options = { identity_file = { names = ["-i"], forms = ["separate", "attached"] }, port = { names = ["-P"], forms = ["separate", "attached"] } }
+scope_examples = { endpoints = ["./local.txt", "user@host:/tmp/remote.txt"], hosts = ["host", "jump.example.com"], identity_file = ["~/.ssh/id_ed25519"], port = ["22", "2222"] }
+scope_descriptions = { endpoints = "Source and destination paths", hosts = "Allowed remote hosts", identity_file = "SSH key to use", port = "Port to connect on" }
+
+[[commands]]
+match = ["sftp"]
+capability = "ssh.sftp"
+label = "SFTP"
+description = "Interactive file transfer over SSH"
+risk = "high"
+scope = { key = "hosts", from = "arg_rest", transform = "hostname" }
+options = { identity_file = { names = ["-i"], forms = ["separate", "attached"] }, port = { names = ["-P"], forms = ["separate", "attached"] } }
+scope_examples = { hosts = ["host", "user@host"], identity_file = ["~/.ssh/id_ed25519"], port = ["22", "2222"] }
+scope_descriptions = { hosts = "Allowed remote hosts", identity_file = "SSH key to use", port = "Port to connect on" }

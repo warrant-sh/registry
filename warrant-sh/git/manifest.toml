@@ -1,0 +1,252 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/git"
+tool = "git"
+tool_version = ">=2.30"
+manifest_version = "1.0.0"
+summary = "Git capability map"
+license = "CC0-1.0"
+source = "https://github.com/git/git"
+
+[transforms]
+supported = ["literal", "path", "hostname", "email_domain", "glob", "git_remote"]
+
+[tool_policy]
+deny_flags = ["-c", "--no-verify", "--exec", "-x", "--global", "--system"]
+strip_env = [
+  "GIT_SSH",
+  "GIT_SSH_COMMAND",
+  "GIT_ASKPASS",
+  "GIT_EDITOR",
+  "GIT_EXEC_PATH",
+  "GIT_CONFIG_GLOBAL",
+  "GIT_CONFIG_SYSTEM",
+  "GIT_CONFIG_PARAMETERS",
+  "GIT_CONFIG_COUNT",
+  "GIT_CONFIG_KEY_*",
+  "GIT_CONFIG_VALUE_*",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "git.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "git.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "git.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "git.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "git.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "git.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["clone"]
+capability = "git.clone"
+description = "Clone a remote repository to a local directory"
+risk = "low"
+default = "allow"
+scope = { key = "repo", from = "arg", index = 1, transform = "git_remote" }
+options = { branch = { names = ["-b", "--branch"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { repo = ["git@github.com:org/repo.git", "https://github.com/org/repo"], branch = ["main", "release/*"] }
+scope_descriptions = { repo = "Repository URL to clone from", branch = "Which branch to check out" }
+
+[[commands]]
+match = ["fetch"]
+capability = "git.fetch"
+description = "Download objects and refs from a remote"
+risk = "low"
+default = "allow"
+args = { remote = 1 }
+scope_examples = { remote = ["origin", "upstream"] }
+scope_descriptions = { remote = "Which remote to fetch from" }
+
+[[commands]]
+match = ["pull"]
+capability = "git.pull"
+description = "Fetch from and integrate with another repository or branch"
+risk = "moderate"
+default = "allow"
+args = { remote = 1, branch = 2 }
+scope_examples = { remote = ["origin", "upstream"], branch = ["main", "release/*"] }
+scope_descriptions = { remote = "Which remote to pull from", branch = "Which branch to pull" }
+
+[[commands]]
+match = ["push"]
+capability = "git.push"
+label = "Push"
+description = "Push local commits to a remote repository"
+risk = "moderate"
+default = "allow"
+when_no_flags = ["--force", "-f", "--force-with-lease"]
+args = { remote = 1, branch = 2 }
+scope_examples = { remote = ["origin", "upstream"], branch = ["main", "release/*"] }
+scope_descriptions = { remote = "Which remote to push to", branch = "Which branches can be pushed" }
+
+[[commands]]
+match = ["push"]
+when_any_flags = ["--force", "-f", "--force-with-lease"]
+capability = "git.push_force"
+label = "Force Push"
+description = "Rewrite remote history by force-pushing commits"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["checkout"]
+capability = "git.checkout"
+description = "Switch branches or restore working tree files"
+risk = "low"
+default = "allow"
+args = { target = 1 }
+scope_examples = { target = ["main", "feature/*", "HEAD~1"] }
+scope_descriptions = { target = "Branch or ref to check out" }
+
+[[commands]]
+match = ["commit"]
+capability = "git.commit"
+description = "Record changes to the repository"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["branch"]
+capability = "git.branch"
+description = "List, create, or delete branches"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["merge"]
+capability = "git.merge"
+description = "Join two or more development histories together"
+risk = "moderate"
+default = "allow"
+args = { target = 1 }
+scope_examples = { target = ["main", "release/*"] }
+scope_descriptions = { target = "Branch to merge into the current branch" }
+
+[[commands]]
+match = ["rebase"]
+capability = "git.rebase"
+description = "Reapply commits on top of another base"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["reset"]
+capability = "git.reset"
+description = "Reset HEAD to a specified state, potentially discarding work"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["stash"]
+capability = "git.stash"
+description = "Stash changes in the working directory"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["tag"]
+capability = "git.tag"
+description = "Create, list, or delete tags"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["remote"]
+capability = "git.remote"
+description = "Manage set of tracked remote repositories"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["remote", "add"]
+capability = "git.remote_add"
+description = "Add a new remote repository URL"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["remote", "set-url"]
+capability = "git.remote_set_url"
+description = "Change a remote repository URL"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["submodule", "add"]
+capability = "git.submodule_add"
+description = "Add a repository as a submodule"
+risk = "high"
+default = "deny"
+scope = { key = "repo", from = "arg", index = 2, transform = "git_remote" }
+args = { path = 3 }
+scope_examples = { repo = ["git@github.com:org/repo.git", "https://github.com/org/repo"], path = ["vendor/lib", "submodules/dependency"] }
+scope_descriptions = { repo = "Repository URL to add as a submodule", path = "Where to place the submodule" }
+
+[[commands]]
+match = ["config"]
+when_any_flags = ["--global", "--system"]
+capability = "git.config_global"
+description = "Modify global or system git configuration"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["config"]
+capability = "git.config"
+description = "Read or write repository-local git configuration"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["log"]
+capability = "git.log"
+description = "Show commit history"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["diff"]
+capability = "git.diff"
+description = "Show changes between commits, working tree, etc."
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["status"]
+capability = "git.status"
+description = "Show working tree status"
+risk = "low"
+default = "allow"

@@ -1,0 +1,152 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/gog"
+tool = "gog"
+tool_version = ">=0.1"
+manifest_version = "1.0.0"
+summary = "Google Workspace CLI (Gmail, Calendar, Drive, Contacts)"
+license = "CC0-1.0"
+source = "https://gogcli.sh/"
+
+[transforms]
+supported = ["literal"]
+
+[[commands]]
+match = ["--help"]
+capability = "gog.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "gog.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "gog.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "gog.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "gog.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "gog.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["gmail", "list"]
+capability = "gog.gmail.list"
+description = "List emails"
+risk = "low"
+
+[[commands]]
+match = ["gmail", "read"]
+capability = "gog.gmail.read"
+description = "Read email content"
+risk = "low"
+
+[[commands]]
+match = ["gmail", "send"]
+capability = "gog.gmail.send"
+description = "Send an email"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["gmail", "reply"]
+capability = "gog.gmail.reply"
+description = "Reply to an email"
+risk = "moderate"
+
+[[commands]]
+match = ["gmail", "forward"]
+capability = "gog.gmail.forward"
+description = "Forward an email"
+risk = "moderate"
+
+[[commands]]
+match = ["gmail", "trash"]
+capability = "gog.gmail.trash"
+description = "Move email to trash"
+risk = "low"
+
+[[commands]]
+match = ["gmail", "label"]
+capability = "gog.gmail.label"
+description = "Manage email labels"
+risk = "low"
+
+[[commands]]
+match = ["calendar", "list"]
+capability = "gog.calendar.list"
+description = "List calendar events"
+risk = "low"
+
+[[commands]]
+match = ["calendar", "get"]
+capability = "gog.calendar.get"
+description = "Get calendar event details"
+risk = "low"
+
+[[commands]]
+match = ["calendar", "create"]
+capability = "gog.calendar.create"
+description = "Create a calendar event"
+risk = "moderate"
+
+[[commands]]
+match = ["calendar", "delete"]
+capability = "gog.calendar.delete"
+description = "Delete a calendar event"
+risk = "moderate"
+
+[[commands]]
+match = ["contacts", "list"]
+capability = "gog.contacts.list"
+description = "List contacts"
+risk = "low"
+
+[[commands]]
+match = ["contacts", "get"]
+capability = "gog.contacts.get"
+description = "Get contact details"
+risk = "low"
+
+[[commands]]
+match = ["drive", "list"]
+capability = "gog.drive.list"
+description = "List Drive files"
+risk = "low"
+
+[[commands]]
+match = ["drive", "download"]
+capability = "gog.drive.download"
+description = "Download a file from Drive"
+risk = "moderate"
+
+[[commands]]
+match = ["drive", "upload"]
+capability = "gog.drive.upload"
+description = "Upload a file to Drive"
+risk = "high"
+default = "deny"

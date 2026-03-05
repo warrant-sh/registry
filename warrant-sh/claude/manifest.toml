@@ -1,0 +1,154 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/claude"
+tool = "claude"
+tool_version = ">=1.0"
+manifest_version = "1.0.0"
+summary = "Anthropic Claude Code CLI — coding agent with permission modes and MCP support"
+license = "CC0-1.0"
+source = "https://github.com/anthropics/claude-code"
+
+[transforms]
+supported = ["literal"]
+
+# Interactive REPL (bare claude invocation with no subcommand or flags)
+[[commands]]
+match = ["--help"]
+capability = "claude.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "claude.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "claude.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "claude.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "claude.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "claude.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "claude.interactive"
+description = "Launch Claude Code interactive REPL"
+risk = "low"
+default = "allow"
+
+# Print mode (non-interactive, SDK)
+# claude -p "query" — runs and exits
+[[commands]]
+match = []
+when_any_flags = ["-p", "--print"]
+capability = "claude.print"
+description = "Run Claude in non-interactive print mode"
+risk = "low"
+default = "allow"
+
+# Continue previous conversation
+[[commands]]
+match = []
+when_any_flags = ["-c", "--continue"]
+capability = "claude.continue"
+description = "Continue the most recent conversation"
+risk = "low"
+default = "allow"
+
+# Resume specific session
+[[commands]]
+match = []
+when_any_flags = ["-r", "--resume"]
+capability = "claude.resume"
+description = "Resume a session by ID or name"
+risk = "low"
+default = "allow"
+
+# Self-update
+[[commands]]
+match = ["update"]
+capability = "claude.update"
+description = "Update Claude Code to the latest version"
+risk = "low"
+default = "allow"
+
+# List configured agents
+[[commands]]
+match = ["agents"]
+capability = "claude.agents"
+description = "List all configured subagents"
+risk = "low"
+default = "allow"
+
+# MCP server management
+[[commands]]
+match = ["mcp"]
+capability = "claude.mcp"
+description = "Configure Model Context Protocol servers (list, add, remove)"
+risk = "low"
+default = "allow"
+
+# Web/remote sessions
+[[commands]]
+match = []
+when_any_flags = ["--remote"]
+capability = "claude.remote"
+description = "Create a web session on claude.ai"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = []
+when_any_flags = ["--teleport"]
+capability = "claude.teleport"
+description = "Resume a web session in the local terminal"
+risk = "moderate"
+default = "allow"
+
+# Maintenance hooks
+[[commands]]
+match = []
+when_any_flags = ["--maintenance"]
+capability = "claude.maintenance"
+description = "Run maintenance hooks and exit"
+risk = "low"
+default = "allow"
+
+# Initialization
+[[commands]]
+match = []
+when_any_flags = ["--init", "--init-only"]
+capability = "claude.init"
+description = "Run initialization hooks"
+risk = "low"
+default = "allow"
+
+# Dangerous: skip all permission prompts
+[tool_policy]
+deny_flags = ["--dangerously-skip-permissions"]
+deny_flags_description = "Block flag that skips all permission prompts"

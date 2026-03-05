@@ -1,0 +1,184 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/codex"
+tool = "codex"
+tool_version = ">=0.1"
+manifest_version = "1.0.0"
+summary = "OpenAI Codex CLI — coding agent with sandbox and approval controls"
+license = "CC0-1.0"
+source = "https://github.com/openai/codex"
+
+[transforms]
+supported = ["literal"]
+
+# Interactive TUI (bare codex invocation with no subcommand)
+[[commands]]
+match = ["--help"]
+capability = "codex.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "codex.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "codex.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "codex.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "codex.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "codex.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "codex.interactive"
+description = "Launch Codex interactive TUI"
+risk = "low"
+default = "allow"
+
+# Non-interactive exec mode
+[[commands]]
+match = ["exec"]
+capability = "codex.exec"
+description = "Run Codex non-interactively with a prompt (codex exec)"
+risk = "low"
+default = "allow"
+
+# Cloud tasks
+[[commands]]
+match = ["cloud"]
+capability = "codex.cloud_submit"
+description = "Submit or manage Codex Cloud tasks"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["cloud", "list"]
+capability = "codex.cloud.list"
+description = "List recent cloud tasks"
+risk = "low"
+default = "allow"
+
+# Apply diffs from cloud
+[[commands]]
+match = ["apply"]
+capability = "codex.apply"
+description = "Apply a diff from a Codex Cloud task to the working tree"
+risk = "moderate"
+default = "allow"
+
+# Session management
+[[commands]]
+match = ["resume"]
+capability = "codex.resume"
+description = "Resume a previous interactive session"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["fork"]
+capability = "codex.fork"
+description = "Fork a previous session into a new thread"
+risk = "low"
+default = "allow"
+
+# Shell completions
+[[commands]]
+match = ["completion"]
+capability = "codex.completion"
+description = "Generate shell completion scripts"
+risk = "low"
+default = "allow"
+
+# Auth
+[[commands]]
+match = ["login"]
+capability = "codex.login"
+description = "Authenticate Codex via OAuth or API key"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["logout"]
+capability = "codex.logout"
+description = "Remove stored authentication credentials"
+risk = "low"
+default = "allow"
+
+# Feature flags
+[[commands]]
+match = ["features"]
+capability = "codex.features"
+description = "List or toggle feature flags"
+risk = "low"
+default = "allow"
+
+# MCP server management
+[[commands]]
+match = ["mcp"]
+capability = "codex.mcp"
+description = "Manage Model Context Protocol servers"
+risk = "low"
+default = "allow"
+
+# Run as MCP server
+[[commands]]
+match = ["mcp-server"]
+capability = "codex.mcp_server"
+description = "Run Codex as an MCP server over stdio"
+risk = "moderate"
+default = "deny"
+
+# Sandbox — run arbitrary commands in Codex sandboxes
+[[commands]]
+match = ["sandbox"]
+capability = "codex.sandbox"
+description = "Run commands inside Codex sandboxes (Landlock/bubblewrap)"
+risk = "moderate"
+default = "allow"
+
+# Desktop app (macOS)
+[[commands]]
+match = ["app"]
+capability = "codex.app"
+description = "Launch Codex Desktop app"
+risk = "low"
+default = "allow"
+
+# Execution policy evaluation
+[[commands]]
+match = ["execpolicy"]
+capability = "codex.execpolicy"
+description = "Evaluate execpolicy rules to test allow/deny behaviour"
+risk = "low"
+default = "allow"
+
+# Dangerous: --yolo mode bypasses all approvals and sandboxing
+[tool_policy]
+deny_flags = ["--dangerously-bypass-approvals-and-sandbox", "--yolo"]
+deny_flags_description = "Block --yolo flag which bypasses all safety controls"

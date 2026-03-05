@@ -1,0 +1,196 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/rust"
+tool = "rust"
+tool_version = ">=1.70"
+manifest_version = "1.0.0"
+summary = "Rust toolchain — compiler, cargo, and common development tools"
+license = "CC0-1.0"
+source = "https://www.rust-lang.org/"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+strip_env = [
+  "RUSTFLAGS",
+  "RUSTDOCFLAGS",
+  "CARGO_BUILD_TARGET",
+  "CARGO_HOME",
+  "CARGO_TARGET_DIR",
+  "CARGO_REGISTRIES_*",
+  "CARGO_REGISTRY_*",
+  "RUSTUP_HOME",
+  "RUSTUP_TOOLCHAIN",
+  "RUSTC_WRAPPER",
+  "RUSTC_WORKSPACE_WRAPPER",
+  "CC",
+  "CXX",
+  "CFLAGS",
+  "CXXFLAGS",
+  "LDFLAGS",
+]
+
+# ── Compiler & toolchain ─────────────────────────
+
+[[commands]]
+match = ["--help"]
+capability = "rust.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "rust.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "rust.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "rust.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "rust.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "rust.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rustc"]
+capability = "rust.rustc"
+description = "Rust compiler"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rustup"]
+capability = "rust.rustup"
+description = "Rust toolchain installer and manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["rustdoc"]
+capability = "rust.rustdoc"
+description = "Rust documentation generator"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rustfmt"]
+capability = "rust.rustfmt"
+description = "Rust code formatter"
+risk = "low"
+default = "allow"
+
+# ── Build & package management ───────────────────
+
+[[commands]]
+match = ["cargo"]
+capability = "rust.cargo"
+description = "Rust package manager and build tool"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["cargo-clippy"]
+capability = "rust.clippy"
+description = "Rust linter"
+risk = "low"
+default = "allow"
+
+# ── Testing & analysis ───────────────────────────
+
+[[commands]]
+match = ["cargo-nextest"]
+capability = "rust.nextest"
+description = "Next-generation Rust test runner"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["cargo-audit"]
+capability = "rust.audit"
+description = "Audit Cargo dependencies for security vulnerabilities"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["cargo-deny"]
+capability = "rust.deny"
+description = "Check Cargo dependencies for advisories, licenses, and bans"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["cargo-expand"]
+capability = "rust.expand"
+description = "Expand Rust macros for inspection"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["cargo-watch"]
+capability = "rust.watch"
+description = "Watch for file changes and rebuild"
+risk = "low"
+default = "allow"
+
+# ── Cross-compilation & release ──────────────────
+
+[[commands]]
+match = ["cross"]
+capability = "rust.cross"
+description = "Cross-compilation tool for Rust"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["cargo-release"]
+capability = "rust.release"
+description = "Automate Rust crate releases"
+risk = "high"
+default = "deny"
+
+# ── Linker & build deps ─────────────────────────
+
+[[commands]]
+match = ["mold"]
+capability = "rust.mold"
+description = "Fast linker"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["lld"]
+capability = "rust.lld"
+description = "LLVM linker"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["sccache"]
+capability = "rust.sccache"
+description = "Shared compilation cache"
+risk = "low"
+default = "allow"

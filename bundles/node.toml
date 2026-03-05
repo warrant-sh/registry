@@ -1,0 +1,18 @@
+[bundle]
+name = "node"
+description = "Node.js development toolchain"
+version = "1.0.0"
+
+[setup]
+guard_all_sessions = false
+shell_guard = false
+prompt_lock = true
+
+[manifests]
+include = [
+  "warrant-sh/coreutils",
+  "warrant-sh/node",
+  "warrant-sh/npm",
+  "warrant-sh/dangerous-patterns",
+  "warrant-sh/sanitize-env",
+]

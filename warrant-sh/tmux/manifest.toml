@@ -1,0 +1,129 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/tmux"
+tool = "tmux"
+tool_version = ">=3.0"
+manifest_version = "1.0.0"
+summary = "Terminal multiplexer session management"
+license = "CC0-1.0"
+source = "https://github.com/tmux/tmux"
+
+[transforms]
+supported = ["literal"]
+
+[[commands]]
+match = ["--help"]
+capability = "tmux.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "tmux.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "tmux.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "tmux.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "tmux.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "tmux.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["new-session"]
+capability = "tmux.session"
+description = "Create a new tmux session"
+risk = "low"
+
+[[commands]]
+match = ["kill-session"]
+capability = "tmux.session"
+description = "Kill a tmux session"
+risk = "low"
+
+[[commands]]
+match = ["has-session"]
+capability = "tmux.session"
+description = "Check if a session exists"
+risk = "low"
+
+[[commands]]
+match = ["list-sessions"]
+capability = "tmux.session"
+description = "List tmux sessions"
+risk = "low"
+
+[[commands]]
+match = ["send-keys"]
+capability = "tmux.interact"
+description = "Send keystrokes to a tmux pane"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["run-shell"]
+capability = "tmux.interact"
+description = "Run a shell command via tmux"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["source-file"]
+capability = "tmux.interact"
+description = "Load tmux config from file"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["capture-pane"]
+capability = "tmux.interact"
+description = "Capture pane contents"
+risk = "low"
+
+[[commands]]
+match = ["attach-session"]
+capability = "tmux.session"
+description = "Attach to a session"
+risk = "low"
+
+[[commands]]
+match = ["detach-client"]
+capability = "tmux.session"
+description = "Detach from a session"
+risk = "low"
+
+[[commands]]
+match = ["select-pane"]
+capability = "tmux.interact"
+description = "Select a pane"
+risk = "low"
+
+[[commands]]
+match = ["split-window"]
+capability = "tmux.interact"
+description = "Split a window into panes"
+risk = "low"

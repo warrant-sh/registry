@@ -1,0 +1,266 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/python"
+tool = "python"
+tool_version = ">=3.8"
+manifest_version = "1.0.0"
+summary = "Python interpreter and common development tools"
+license = "CC0-1.0"
+source = "https://www.python.org/"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+allow_inline_execution = true
+package_policy = "denylist"
+package_ecosystem = "pypi"
+package_scope = "packages"
+strip_env = [
+  "PYTHONSTARTUP",
+  "PYTHONPATH",
+  "PYTHONHOME",
+  "PYTHONINSPECT",
+  "PYTHONUSERBASE",
+  "PYTHONEXECUTABLE",
+  "PIP_INDEX_URL",
+  "PIP_EXTRA_INDEX_URL",
+  "PIP_TRUSTED_HOST",
+  "PIP_CONFIG_FILE",
+]
+
+# ── Interpreters ─────────────────────────────────
+
+[[commands]]
+match = ["--help"]
+capability = "python.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "python.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "python.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "python.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "python.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "python.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["python3", "-m", "http.server"]
+capability = "interpreter.python3_http_server"
+description = "Run Python's built-in HTTP server module"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["python3", "-m", "SimpleHTTPServer"]
+capability = "interpreter.python3_simple_http_server"
+description = "Run Python's legacy built-in HTTP server module"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["python3"]
+capability = "interpreter.python3"
+description = "Run the Python 3 interpreter"
+risk = "high"
+default = "allow"
+
+[[commands]]
+match = ["python"]
+capability = "interpreter.python"
+description = "Run the Python interpreter"
+risk = "high"
+default = "allow"
+
+# ── Package & environment management ─────────────
+
+[[commands]]
+match = ["pip3"]
+capability = "python.pip3"
+description = "Python 3 package installer"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["python3", "-m", "pip", "install"]
+capability = "python.pip_install"
+description = "Install Python packages through pip module execution"
+risk = "moderate"
+default = "allow"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+options = { index = { names = ["-i", "--index-url"], forms = ["separate", "equals", "attached"] }, extra_index = { names = ["--extra-index-url"], forms = ["separate", "equals"] }, requirements = { names = ["-r", "--requirement"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { packages = ["requests", "uvicorn"], index = ["https://pypi.org/simple", "https://pypi.example.com/simple"], extra_index = ["https://download.pytorch.org/whl/cu121"], requirements = ["requirements.txt", "./req/prod.txt"] }
+scope_descriptions = { packages = "Which packages to install", index = "Primary package index URL", extra_index = "Additional package index URLs", requirements = "Requirements file to install from" }
+
+[[commands]]
+match = ["pipx"]
+capability = "python.pipx"
+description = "Install and run Python applications in isolated environments"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["virtualenv"]
+capability = "python.virtualenv"
+description = "Create isolated Python environments"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["poetry"]
+capability = "python.poetry"
+description = "Python dependency management and packaging"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pdm"]
+capability = "python.pdm"
+description = "Python package and dependency manager"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["uv"]
+capability = "python.uv"
+description = "Fast Python package installer and resolver"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["conda"]
+capability = "python.conda"
+description = "Conda package and environment manager"
+risk = "moderate"
+default = "allow"
+
+# ── Testing & quality ────────────────────────────
+
+[[commands]]
+match = ["pytest"]
+capability = "python.pytest"
+description = "Run Python tests with pytest"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["mypy"]
+capability = "python.mypy"
+description = "Static type checker for Python"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["ruff"]
+capability = "python.ruff"
+description = "Fast Python linter and formatter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["black"]
+capability = "python.black"
+description = "Python code formatter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["isort"]
+capability = "python.isort"
+description = "Python import sorter"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["flake8"]
+capability = "python.flake8"
+description = "Python linting tool"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pylint"]
+capability = "python.pylint"
+description = "Python static analysis tool"
+risk = "low"
+default = "allow"
+
+# ── Build & packaging ────────────────────────────
+
+[[commands]]
+match = ["twine"]
+capability = "python.twine"
+description = "Upload packages to PyPI"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["django-admin"]
+capability = "python.django_admin"
+description = "Django administrative utility"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["flask"]
+capability = "python.flask"
+description = "Flask CLI"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["uvicorn"]
+capability = "python.uvicorn"
+description = "ASGI server for Python web applications"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["gunicorn"]
+capability = "python.gunicorn"
+description = "WSGI HTTP server for Python"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["jupyter"]
+capability = "python.jupyter"
+description = "Jupyter notebook and lab"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["ipython"]
+capability = "python.ipython"
+description = "Enhanced interactive Python shell"
+risk = "high"
+default = "allow"

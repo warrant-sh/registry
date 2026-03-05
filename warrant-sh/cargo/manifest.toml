@@ -1,0 +1,154 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/cargo"
+tool = "cargo"
+tool_version = ">=1.70"
+manifest_version = "1.0.0"
+summary = "Cargo capability map"
+license = "CC0-1.0"
+source = "https://github.com/rust-lang/cargo"
+
+[transforms]
+supported = ["literal", "path", "glob"]
+
+[tool_policy]
+deny_flags = ["--config", "--git", "--path"]
+package_policy = "denylist"
+package_ecosystem = "cargo"
+package_scope = "packages"
+strip_env = [
+  "RUSTC_WRAPPER",
+  "RUSTC_WORKSPACE_WRAPPER",
+  "RUSTC",
+  "RUSTDOC",
+  "RUSTFLAGS",
+  "RUSTDOCFLAGS",
+  "CARGO_ENCODED_RUSTFLAGS",
+  "CARGO_TARGET_*_LINKER",
+  "CARGO_TARGET_*_RUNNER",
+]
+
+[[commands]]
+match = ["--help"]
+capability = "cargo.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "cargo.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "cargo.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "cargo.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-V"]
+capability = "cargo.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "cargo.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["build"]
+capability = "cargo.build"
+description = "Compile the current package"
+risk = "low"
+options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
+scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to build" }
+
+[[commands]]
+match = ["test"]
+capability = "cargo.test"
+description = "Run the project's test suite"
+risk = "low"
+options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
+scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to test" }
+
+[[commands]]
+match = ["run"]
+capability = "cargo.run"
+description = "Build and execute a binary from the project"
+risk = "moderate"
+options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { manifest = ["./Cargo.toml"], package = ["my-crate"] }
+scope_descriptions = { manifest = "Path to Cargo.toml", package = "Which package to run" }
+
+[[commands]]
+match = ["check"]
+capability = "cargo.check"
+description = "Check the project for errors without producing binaries"
+risk = "low"
+options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
+scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
+scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to check" }
+
+[[commands]]
+match = ["clippy"]
+capability = "cargo.clippy"
+description = "Run the Clippy linter"
+risk = "low"
+
+[[commands]]
+match = ["fmt"]
+capability = "cargo.fmt"
+description = "Format source code with rustfmt"
+risk = "low"
+
+[[commands]]
+match = ["publish"]
+capability = "cargo.publish"
+description = "Publish a crate to a registry"
+risk = "high"
+default = "deny"
+options = { registry = { names = ["--registry"], forms = ["separate", "equals"] } }
+scope_examples = { registry = ["crates-io", "internal"] }
+scope_descriptions = { registry = "Which registry to publish to" }
+
+[[commands]]
+match = ["install"]
+capability = "cargo.install"
+description = "Install a Rust binary from crates.io or a local path"
+risk = "moderate"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+options = { root = { names = ["--root"], forms = ["separate", "equals"] } }
+scope_examples = { packages = ["ripgrep", "cargo-nextest"], root = ["/opt/cargo"] }
+scope_descriptions = { packages = "Which crates to install", root = "Installation directory" }
+
+[[commands]]
+match = ["update"]
+capability = "cargo.update"
+description = "Update dependencies in Cargo.lock"
+risk = "low"
+
+[[commands]]
+match = ["add"]
+capability = "cargo.add"
+description = "Add a dependency to Cargo.toml"
+risk = "low"
+scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["serde", "tokio@1"] }
+scope_descriptions = { packages = "Which crates to add as dependencies" }
