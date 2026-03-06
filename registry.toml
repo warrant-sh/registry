@@ -169,3 +169,7 @@ id = "go"
 path = "bundles/go.toml"
 version = "1.0.0"
 hash = "sha256:01c612d9f86ccddd415cb49940a2e5235a432f8e1cc838885c41478fc63eff35"
+
+[denylists]
+npm_sha256 = "9f98ed52cefe003e5c854363369227c1e6ef845817779a3db55113dcbe358cb7"
+pypi_sha256 = "3d3bbcb4511e56a90ee1f50a25b5f0057a323a22a7587c0241f12207d62c57bf"

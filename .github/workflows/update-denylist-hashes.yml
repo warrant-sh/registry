@@ -1,0 +1,85 @@
+name: Update Denylist Hashes
+
+on:
+  schedule:
+    - cron: '15 6 * * *'  # 06:15 UTC daily
+  workflow_dispatch: {}     # manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-hashes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download and hash denylist manifests
+        run: |
+          NPM_URL="https://raw.githubusercontent.com/DataDog/malicious-software-packages-dataset/main/samples/npm/manifest.json"
+          PYPI_URL="https://raw.githubusercontent.com/DataDog/malicious-software-packages-dataset/main/samples/pypi/manifest.json"
+
+          echo "Downloading npm manifest..."
+          curl -fsSL "$NPM_URL" -o /tmp/npm-manifest.json
+          NPM_HASH=$(sha256sum /tmp/npm-manifest.json | awk '{print $1}')
+          echo "npm hash: $NPM_HASH"
+
+          echo "Downloading pypi manifest..."
+          curl -fsSL "$PYPI_URL" -o /tmp/pypi-manifest.json
+          PYPI_HASH=$(sha256sum /tmp/pypi-manifest.json | awk '{print $1}')
+          echo "pypi hash: $PYPI_HASH"
+
+          echo "NPM_HASH=$NPM_HASH" >> "$GITHUB_ENV"
+          echo "PYPI_HASH=$PYPI_HASH" >> "$GITHUB_ENV"
+
+      - name: Check for changes
+        id: check
+        run: |
+          CURRENT_NPM=$(grep 'npm_sha256' registry.toml 2>/dev/null | sed 's/.*= *"\(.*\)"/\1/' || echo "")
+          CURRENT_PYPI=$(grep 'pypi_sha256' registry.toml 2>/dev/null | sed 's/.*= *"\(.*\)"/\1/' || echo "")
+
+          if [[ "$CURRENT_NPM" == "$NPM_HASH" && "$CURRENT_PYPI" == "$PYPI_HASH" ]]; then
+            echo "No changes detected"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Hashes changed — npm: $CURRENT_NPM -> $NPM_HASH, pypi: $CURRENT_PYPI -> $PYPI_HASH"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update registry.toml
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          # Add or update [denylists] section
+          if grep -q '^\[denylists\]' registry.toml; then
+            # Update existing entries
+            sed -i "s/^npm_sha256 = .*/npm_sha256 = \"$NPM_HASH\"/" registry.toml
+            sed -i "s/^pypi_sha256 = .*/pypi_sha256 = \"$PYPI_HASH\"/" registry.toml
+          else
+            # Append new section before any trailing newlines
+            printf '\n[denylists]\nnpm_sha256 = "%s"\npypi_sha256 = "%s"\n' "$NPM_HASH" "$PYPI_HASH" >> registry.toml
+          fi
+
+      - name: Sign registry index
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          pip install -q pynacl
+          PRIVATE_KEY_B64="${{ secrets.REGISTRY_SIGNING_KEY }}" python3 - <<'PY'
+          import base64, os
+          from nacl.signing import SigningKey
+          seed = base64.b64decode(os.environ["PRIVATE_KEY_B64"].strip())
+          sk = SigningKey(seed)
+          data = open("registry.toml", "rb").read()
+          sig = sk.sign(data).signature
+          open("registry.toml.sig", "w").write(base64.b64encode(sig).decode() + "\n")
+          sk.verify_key.verify(data, base64.b64decode(open("registry.toml.sig").read().strip()))
+          print("✓ Signed and verified")
+          PY
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "warrant-bot"
+          git config user.email "bot@warrant.sh"
+          git add registry.toml registry.toml.sig
+          git commit -m "chore: update denylist hashes ($(date -u +%Y-%m-%d))"
+          git push
