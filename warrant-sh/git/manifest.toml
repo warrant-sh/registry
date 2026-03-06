@@ -12,7 +12,7 @@ source = "https://github.com/git/git"
 supported = ["literal", "path", "hostname", "email_domain", "glob", "git_remote"]
 
 [tool_policy]
-deny_flags = ["-c", "--no-verify", "--exec", "-x", "--global", "--system", "--file"]
+deny_flags = ["-c", "--no-verify", "--exec", "-x", "--global", "--system", "-f", "--file"]
 strip_env = [
   "GIT_SSH",
   "GIT_SSH_COMMAND",
