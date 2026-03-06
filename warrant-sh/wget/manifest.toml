@@ -12,7 +12,7 @@ source = "https://www.gnu.org/software/wget/"
 supported = ["literal", "hostname", "path", "glob"]
 
 [tool_policy]
-deny_flags = ["-e", "--execute", "--config", "--post-file", "--post-data", "--header", "--load-cookies", "-i", "--input-file"]
+deny_flags = ["-e", "--execute", "--config", "--post-file", "--post-data", "--body-file", "--body-data", "--header", "--load-cookies", "-i", "--input-file"]
 strip_env = ["WGETRC", "http_proxy", "HTTP_PROXY", "https_proxy", "HTTPS_PROXY", "ftp_proxy", "FTP_PROXY", "no_proxy", "NO_PROXY", "all_proxy", "ALL_PROXY"]
 
 [[commands]]
