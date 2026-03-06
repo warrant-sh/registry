@@ -48,7 +48,7 @@ hash = "sha256:e2c4095f1d2a7bfb630e349dfa334ed902b9752d6afd7d43996ae0d8032d413a"
 id = "warrant-sh/git"
 path = "warrant-sh/git/manifest.toml"
 version = "1.0.0"
-hash = "sha256:bb1e50667400087c6cd0bdca079dd4540d17fbb5bb45b98b6dd853bb564c9226"
+hash = "sha256:329832251028e498c6a17955881042ce099a870dc125eaeeaf0b57adb47228e0"
 
 [[manifests]]
 id = "warrant-sh/go"
@@ -132,7 +132,7 @@ hash = "sha256:a9c671bea04f0da5e09a5032810a4bb9d5284368e753d5a15960a104afb65d88"
 id = "warrant-sh/wget"
 path = "warrant-sh/wget/manifest.toml"
 version = "1.0.0"
-hash = "sha256:38d86b0cd398a966afc9029a28fa38de40f3a8af675b5ea89524f3e0c56655b3"
+hash = "sha256:9bd4eb63982e296a7f1bf608336663e1c056d703d29c0204434ae96deaa8e5e0"
 
 [[bundles]]
 id = "codex"
