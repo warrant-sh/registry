@@ -45,6 +45,12 @@ version = "1.0.0"
 hash = "sha256:d92995eb76dd351802c5cd340953cdb3bbccbc1e3ea1bcd6322ffde73871cb01"
 
 [[manifests]]
+id = "warrant-sh/gh"
+path = "warrant-sh/gh/manifest.toml"
+version = "1.0.0"
+hash = "sha256:49601f992159dd8948a124d83e06adf465b5a929c04d77359f7410d9fe8a2b94"
+
+[[manifests]]
 id = "warrant-sh/git"
 path = "warrant-sh/git/manifest.toml"
 version = "1.0.0"
@@ -163,6 +169,12 @@ id = "node"
 path = "bundles/node.toml"
 version = "1.0.0"
 hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
+
+[[bundles]]
+id = "github"
+path = "bundles/github.toml"
+version = "1.0.0"
+hash = "sha256:b0499a0422c73e1bc98b1815c5959f88be23450a54ab22cb82128db721b0affc"
 
 [[bundles]]
 id = "go"

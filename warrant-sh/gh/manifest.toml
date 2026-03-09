@@ -1,0 +1,619 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/gh"
+tool = "gh"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "GitHub CLI capability map"
+license = "CC0-1.0"
+source = "https://cli.github.com/"
+
+[transforms]
+supported = ["literal"]
+
+# --- Help & version ---
+
+[[commands]]
+match = ["--help"]
+capability = "gh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "gh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "gh.help"
+description = "Show CLI help and usage information"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "gh.version"
+description = "Show CLI version information"
+risk = "low"
+default = "allow"
+
+# --- Pull requests (read) ---
+
+[[commands]]
+match = ["pr", "list"]
+capability = "gh.pr_list"
+description = "List pull requests"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "view"]
+capability = "gh.pr_view"
+description = "View a pull request"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "diff"]
+capability = "gh.pr_diff"
+description = "View pull request diff"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "checks"]
+capability = "gh.pr_checks"
+description = "View pull request checks"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "status"]
+capability = "gh.pr_status"
+description = "Show pull request status"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "checkout"]
+capability = "gh.pr_checkout"
+description = "Check out a pull request locally"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["pr", "review"]
+capability = "gh.pr_review"
+description = "Review a pull request"
+risk = "low"
+default = "allow"
+
+# --- Pull requests (mutate) ---
+
+[[commands]]
+match = ["pr", "create"]
+capability = "gh.pr_create"
+description = "Create a pull request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pr", "merge"]
+capability = "gh.pr_merge"
+description = "Merge a pull request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pr", "close"]
+capability = "gh.pr_close"
+description = "Close a pull request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pr", "reopen"]
+capability = "gh.pr_reopen"
+description = "Reopen a pull request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pr", "comment"]
+capability = "gh.pr_comment"
+description = "Comment on a pull request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["pr", "edit"]
+capability = "gh.pr_edit"
+description = "Edit a pull request"
+risk = "moderate"
+default = "allow"
+
+# --- Issues (read) ---
+
+[[commands]]
+match = ["issue", "list"]
+capability = "gh.issue_list"
+description = "List issues"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["issue", "view"]
+capability = "gh.issue_view"
+description = "View an issue"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["issue", "status"]
+capability = "gh.issue_status"
+description = "Show issue status"
+risk = "low"
+default = "allow"
+
+# --- Issues (mutate) ---
+
+[[commands]]
+match = ["issue", "create"]
+capability = "gh.issue_create"
+description = "Create an issue"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["issue", "close"]
+capability = "gh.issue_close"
+description = "Close an issue"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["issue", "reopen"]
+capability = "gh.issue_reopen"
+description = "Reopen an issue"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["issue", "comment"]
+capability = "gh.issue_comment"
+description = "Comment on an issue"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["issue", "edit"]
+capability = "gh.issue_edit"
+description = "Edit an issue"
+risk = "moderate"
+default = "allow"
+
+# --- Repos (read) ---
+
+[[commands]]
+match = ["repo", "view"]
+capability = "gh.repo_view"
+description = "View a repository"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["repo", "list"]
+capability = "gh.repo_list"
+description = "List repositories"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["repo", "clone"]
+capability = "gh.repo_clone"
+description = "Clone a repository"
+risk = "low"
+default = "allow"
+
+# --- Repos (mutate) ---
+
+[[commands]]
+match = ["repo", "fork"]
+capability = "gh.repo_fork"
+description = "Fork a repository"
+risk = "moderate"
+default = "allow"
+
+# --- Repos (high risk) ---
+
+[[commands]]
+match = ["repo", "create"]
+capability = "gh.repo_create"
+description = "Create a new repository"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["repo", "delete"]
+capability = "gh.repo_delete"
+description = "Delete a repository"
+risk = "high"
+default = "deny"
+
+# --- Actions: runs ---
+
+[[commands]]
+match = ["run", "list"]
+capability = "gh.run_list"
+description = "List workflow runs"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["run", "view"]
+capability = "gh.run_view"
+description = "View a workflow run"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["run", "watch"]
+capability = "gh.run_watch"
+description = "Watch a workflow run"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["run", "rerun"]
+capability = "gh.run_rerun"
+description = "Rerun a workflow run"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["run", "cancel"]
+capability = "gh.run_cancel"
+description = "Cancel a workflow run"
+risk = "moderate"
+default = "allow"
+
+# --- Actions: workflows ---
+
+[[commands]]
+match = ["workflow", "list"]
+capability = "gh.workflow_list"
+description = "List workflows"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["workflow", "view"]
+capability = "gh.workflow_view"
+description = "View a workflow"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["workflow", "run"]
+capability = "gh.workflow_run"
+description = "Trigger a workflow run"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["workflow", "enable"]
+capability = "gh.workflow_enable"
+description = "Enable a workflow"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["workflow", "disable"]
+capability = "gh.workflow_disable"
+description = "Disable a workflow"
+risk = "moderate"
+default = "allow"
+
+# --- Releases ---
+
+[[commands]]
+match = ["release", "list"]
+capability = "gh.release_list"
+description = "List releases"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["release", "view"]
+capability = "gh.release_view"
+description = "View a release"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["release", "create"]
+capability = "gh.release_create"
+description = "Create a release"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["release", "edit"]
+capability = "gh.release_edit"
+description = "Edit a release"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["release", "delete"]
+capability = "gh.release_delete"
+description = "Delete a release"
+risk = "moderate"
+default = "allow"
+
+# --- Gists ---
+
+[[commands]]
+match = ["gist", "list"]
+capability = "gh.gist_list"
+description = "List gists"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["gist", "view"]
+capability = "gh.gist_view"
+description = "View a gist"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["gist", "create"]
+capability = "gh.gist_create"
+description = "Create a gist"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["gist", "edit"]
+capability = "gh.gist_edit"
+description = "Edit a gist"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["gist", "delete"]
+capability = "gh.gist_delete"
+description = "Delete a gist"
+risk = "moderate"
+default = "allow"
+
+# --- Search ---
+
+[[commands]]
+match = ["search", "repos"]
+capability = "gh.search_repos"
+description = "Search repositories"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["search", "issues"]
+capability = "gh.search_issues"
+description = "Search issues"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["search", "prs"]
+capability = "gh.search_prs"
+description = "Search pull requests"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["search", "commits"]
+capability = "gh.search_commits"
+description = "Search commits"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["search", "code"]
+capability = "gh.search_code"
+description = "Search code"
+risk = "low"
+default = "allow"
+
+# --- Labels ---
+
+[[commands]]
+match = ["label", "list"]
+capability = "gh.label_list"
+description = "List labels"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["label", "create"]
+capability = "gh.label_create"
+description = "Create a label"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["label", "edit"]
+capability = "gh.label_edit"
+description = "Edit a label"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["label", "delete"]
+capability = "gh.label_delete"
+description = "Delete a label"
+risk = "moderate"
+default = "allow"
+
+# --- Cache ---
+
+[[commands]]
+match = ["cache", "list"]
+capability = "gh.cache_list"
+description = "List caches"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["cache", "delete"]
+capability = "gh.cache_delete"
+description = "Delete a cache"
+risk = "moderate"
+default = "allow"
+
+# --- Browse & status ---
+
+[[commands]]
+match = ["browse"]
+capability = "gh.browse"
+description = "Open repository in browser"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["status"]
+capability = "gh.status"
+description = "Show GitHub status"
+risk = "low"
+default = "allow"
+
+# --- API ---
+
+[[commands]]
+match = ["api"]
+when_any_flags = ["--method", "-X"]
+capability = "gh.api_mutate"
+description = "Make a mutating GitHub API request"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["api"]
+capability = "gh.api_read"
+description = "Make a read-only GitHub API request"
+risk = "low"
+default = "allow"
+
+# --- Auth ---
+
+[[commands]]
+match = ["auth", "status"]
+capability = "gh.auth_status"
+description = "Check authentication status"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["auth", "login"]
+capability = "gh.auth_login"
+description = "Log in to GitHub"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["auth", "logout"]
+capability = "gh.auth_logout"
+description = "Log out of GitHub"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["auth", "switch"]
+capability = "gh.auth_switch"
+description = "Switch GitHub account"
+risk = "high"
+default = "deny"
+
+# --- Secrets & variables ---
+
+[[commands]]
+match = ["secret", "set"]
+capability = "gh.secret_set"
+description = "Set a secret"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["secret", "delete"]
+capability = "gh.secret_delete"
+description = "Delete a secret"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["variable", "set"]
+capability = "gh.variable_set"
+description = "Set a variable"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["variable", "delete"]
+capability = "gh.variable_delete"
+description = "Delete a variable"
+risk = "high"
+default = "deny"
+
+# --- Extensions ---
+
+[[commands]]
+match = ["extension", "install"]
+capability = "gh.extension_install"
+description = "Install a gh extension"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["extension", "remove"]
+capability = "gh.extension_remove"
+description = "Remove a gh extension"
+risk = "high"
+default = "deny"
+
+# --- Config ---
+
+[[commands]]
+match = ["config", "set"]
+capability = "gh.config_set"
+description = "Modify gh configuration"
+risk = "high"
+default = "deny"
+
+# --- Copilot & agent-task ---
+
+[[commands]]
+match = ["copilot"]
+capability = "gh.copilot"
+description = "Run GitHub Copilot commands"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["agent-task"]
+capability = "gh.agent_task"
+description = "Run agent tasks"
+risk = "high"
+default = "deny"
+
+# --- Catch-all ---
+
+[[commands]]
+match = []
+capability = "gh.other"
+description = "Any other gh subcommand not explicitly listed"
+risk = "low"
+default = "allow"

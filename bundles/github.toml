@@ -1,0 +1,24 @@
+[bundle]
+name = "github"
+description = "GitHub development workflow (git + gh CLI)"
+version = "1.0.0"
+
+[setup]
+guard_all_sessions = false
+shell_guard = true
+prompt_lock = true
+
+[[agents]]
+name = "github"
+alias = "github"
+
+[manifests]
+include = [
+  "warrant-sh/coreutils",
+  "warrant-sh/git",
+  "warrant-sh/gh",
+  "warrant-sh/ssh",
+  "warrant-sh/dangerous-patterns",
+  "warrant-sh/sanitize-env",
+  "warrant-sh/strict-paths",
+]
