@@ -33,7 +33,7 @@ scope_defaults = { programs = [
   "du", "df",
   "md5sum", "sha256sum", "shasum",
   "tree", "bat",
-  "cp", "mv", "mkdir", "touch", "ln",
+  "cp", "mv", "rm", "rmdir", "mkdir", "mktemp", "touch", "ln",
   "install", "rsync",
   "tar", "zip", "unzip", "gzip", "gunzip", "bzip2", "xz",
   "chmod", "chown", "chgrp",

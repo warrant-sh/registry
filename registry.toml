@@ -24,7 +24,7 @@ hash = "sha256:e8f82765c6c1caec8792f6d05bb57a07f140ebc57bcb110792915700b857bf87"
 id = "warrant-sh/coreutils"
 path = "warrant-sh/coreutils/manifest.toml"
 version = "1.0.0"
-hash = "sha256:96b4c7180f47144703836b39ca4693845e67a8b81b23351f2d8760428e99bead"
+hash = "sha256:e1eff2892012ed1554743465b38e6e77e58198664ed62afff0af75603726b9d0"
 
 [[manifests]]
 id = "warrant-sh/curl"
@@ -114,7 +114,7 @@ hash = "sha256:d5746eef7b0d36ee0d7eb1cf79abbb6e67b0ce1727e9cdb50e2f93a9ec445d74"
 id = "warrant-sh/strict-paths"
 path = "warrant-sh/strict-paths/manifest.toml"
 version = "1.0.0"
-hash = "sha256:67f61293aa1715c92703bf9db1d4117a7a9a08ceeb5a7c0b921b398095916c36"
+hash = "sha256:c41f065244ab62d9946dc3b229689affa7dca443ec23dc19cb680c4a8e09b8d7"
 
 [[manifests]]
 id = "warrant-sh/tmux"

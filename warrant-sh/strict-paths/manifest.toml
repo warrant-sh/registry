@@ -19,5 +19,5 @@ description = "Restrict which directories executables can be resolved from"
 risk = "low"
 default = "allow"
 scope = { key = "paths", from = "arg_rest", transform = "glob", examples = ["/usr/bin/**", "/bin/**", "/usr/local/bin/**"] }
-scope_defaults = { paths = ["/usr/bin/**", "/bin/**", "/usr/sbin/**", "/sbin/**", "/usr/local/bin/**", "/usr/local/sbin/**"] }
+scope_defaults = { paths = ["/usr/bin/**", "/bin/**", "/usr/sbin/**", "/sbin/**", "/usr/local/bin/**", "/usr/local/sbin/**", "/opt/homebrew/bin/**", "/opt/homebrew/sbin/**"] }
 scope_descriptions = { paths = "Allowed executable directory patterns" }
