@@ -174,7 +174,7 @@ hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
 id = "github"
 path = "bundles/github.toml"
 version = "1.0.0"
-hash = "sha256:b0499a0422c73e1bc98b1815c5959f88be23450a54ab22cb82128db721b0affc"
+hash = "sha256:d7349aa3a5d0bdcedee66d17a0a009a8db7b818507b6b11757f7ff08b9d7c62c"
 
 [[bundles]]
 id = "go"

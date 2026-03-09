@@ -9,8 +9,12 @@ shell_guard = true
 prompt_lock = true
 
 [[agents]]
-name = "github"
-alias = "github"
+name = "git"
+alias = "git"
+
+[[agents]]
+name = "gh"
+alias = "gh"
 
 [manifests]
 include = [
