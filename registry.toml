@@ -144,7 +144,7 @@ hash = "sha256:9bd4eb63982e296a7f1bf608336663e1c056d703d29c0204434ae96deaa8e5e0"
 id = "codex"
 path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:49fa6b335232faa7e6f0e1996da66eed2ed8e27bbd5ff17138adc8407be4b4a2"
+hash = "sha256:08a01f290af195ee99cb7123554d21030f9272d87d4f54b7a4f5791fd37dbab2"
 
 [[bundles]]
 id = "claude"
