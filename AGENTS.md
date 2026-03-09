@@ -52,6 +52,22 @@ license = "CC0-1.0"
 source = "https://github.com/..."    # Link to the tool's source/docs
 ```
 
+#### Writing Good Summaries
+
+The `summary` field helps agents and users understand what a manifest covers at a glance. Include the tool's domain and key capabilities, not just the tool name.
+
+```toml
+# ✅ Good — describes domain and scope
+summary = "Git version control — clone, push, pull, branching, history, remotes. Force-push and remote-add split as high-risk."
+summary = "GitHub CLI — PRs, issues, releases, Actions, API. Repo create/delete and auth changes denied."
+summary = "Python package installer — install, uninstall, freeze. Denylist-checked against known malicious packages."
+
+# ❌ Bad — just restates the tool name
+summary = "Git capability map"
+summary = "npm manifest"
+summary = "Docker"
+```
+
 ### 2. `[transforms]` — Scope Transforms
 
 Declare which transform functions you use in scope definitions:
@@ -210,6 +226,66 @@ options = { branch = { names = ["-b", "--branch"], forms = ["separate", "equals"
 
 Forms: `"separate"` = `-b main`, `"equals"` = `--branch=main`, `"attached"` = `-bmain`
 
+**Always include `scope_descriptions` and `scope_examples`** when adding scopes. They make `wsh explain` output useful and help agents understand what they're being asked to scope. Omitting them is a common oversight.
+
+#### The Catch-All — CRITICAL
+
+**Every manifest that uses subcommand matching MUST have a catch-all entry as the last `[[commands]]` entry.** Without it, any subcommand not explicitly listed will be denied with "no manifest command mapping matched" — even safe, read-only commands.
+
+The catch-all matches anything not caught by a more specific entry above it:
+
+```toml
+# This MUST be the last [[commands]] entry in the file
+[[commands]]
+match = []
+capability = "mytool.other"
+description = "Any other mytool subcommand not explicitly listed"
+risk = "low"
+default = "allow"
+```
+
+**Why this matters:** If a manifest exists for a tool but doesn't match the specific subcommand, wsh denies the command. Having a partial manifest is *worse* than having no manifest at all. The catch-all prevents this.
+
+**The pattern is:**
+1. Explicitly list high-risk commands with `deny` or scoped controls
+2. Explicitly list commonly-used commands for documentation and granularity
+3. Catch everything else with a `match = []` entry at the bottom
+
+```toml
+# ❌ Bad — missing catch-all. "mytool stats" will be denied even though it's harmless.
+[[commands]]
+match = ["push"]
+capability = "mytool.push"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["delete"]
+capability = "mytool.delete"
+risk = "high"
+default = "deny"
+
+# ✅ Good — catch-all at the bottom. "mytool stats" falls through and is allowed.
+[[commands]]
+match = ["push"]
+capability = "mytool.push"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["delete"]
+capability = "mytool.delete"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = []
+capability = "mytool.other"
+description = "Any other mytool subcommand not explicitly listed"
+risk = "low"
+default = "allow"
+```
+
 ## Step-by-Step: Writing a Manifest
 
 ### 1. Understand the CLI
@@ -232,7 +308,7 @@ id = "warrant-sh/mytool"
 tool = "mytool"
 tool_version = "*"
 manifest_version = "1.0.0"
-summary = "MyTool capability map"
+summary = "MyTool — brief description of domain and key capabilities"
 license = "CC0-1.0"
 source = "https://github.com/example/mytool"
 
@@ -264,15 +340,45 @@ If a flag significantly changes the risk profile, create separate capabilities:
 
 ### 6. Add scopes where useful
 
-If policy might need to restrict *what* a command targets (which remote, which file, which host), add scope extraction.
+If policy might need to restrict *what* a command targets (which remote, which file, which host), add scope extraction. Always include `scope_descriptions` and `scope_examples`.
 
-### 7. Add tool_policy if needed
+Don't over-scope — only add scopes where policy will realistically need to filter by target. Not every argument needs a scope.
+
+### 7. Add the catch-all
+
+**Do not skip this step.** Add a `match = []` entry as the last `[[commands]]` in the file. See the [catch-all section](#the-catch-all--critical) above.
+
+### 8. Add tool_policy if needed
 
 If the tool has:
 - Environment variables that can hijack behaviour → `strip_env`
 - Flags that should always be blocked → `deny_flags`
+- Inline code execution via `-c`/`-e` → set `allow_inline_execution` appropriately
+- Package installation → configure `package_policy` and `package_ecosystem`
 
-### 8. Update the registry index
+### 9. Validate the manifest
+
+Before committing, check for common errors:
+
+```bash
+# Verify TOML is valid
+python3 -c "import tomllib; tomllib.load(open('warrant-sh/mytool/manifest.toml', 'rb')); print('✓ valid TOML')"
+
+# Check required fields
+python3 -c "
+import tomllib
+m = tomllib.load(open('warrant-sh/mytool/manifest.toml', 'rb'))
+assert m['manifest']['schema'] == 'warrant.manifest.v1', 'bad schema'
+assert m['manifest']['id'], 'missing id'
+assert m['manifest']['tool'], 'missing tool'
+cmds = [c for c in m.get('commands', []) if isinstance(c, dict)]
+# Verify catch-all exists (last command has empty match)
+assert any(c.get('match') == [] for c in cmds), 'MISSING CATCH-ALL — add a match=[] entry at the end'
+print('✓ manifest looks good')
+"
+```
+
+### 10. Update the registry index
 
 Add your manifest to `registry.toml`:
 
@@ -290,7 +396,22 @@ Generate the hash:
 sha256sum warrant-sh/mytool/manifest.toml | awk '{print "sha256:" $1}'
 ```
 
-### 9. Test it
+Then re-sign:
+
+```bash
+./sign-registry-dev.sh
+```
+
+### 11. Test it
+
+Run through this checklist:
+
+- [ ] **Every subcommand covered** — run `mytool --help` and verify each subcommand either has an explicit entry or falls through to the catch-all
+- [ ] **Flag-based splits work** — test that dangerous flags (e.g. `--force`) trigger the high-risk capability, not the normal one
+- [ ] **Deny_flags actually block** — if you set `deny_flags`, verify they cause a denial
+- [ ] **Scope extraction works** — run `wsh explain` on a scoped command and verify the scope values are extracted correctly
+- [ ] **Catch-all handles unlisted commands** — try a subcommand you didn't explicitly list and verify it's allowed (not denied with "no manifest command mapping matched")
+- [ ] **Risk levels make sense** — read-only commands are `low`, destructive commands are `high` or `critical`
 
 ```bash
 # Pull and install
@@ -304,15 +425,19 @@ wsh edit mytool
 sudo wsh lock
 
 # Test commands
-wsh exec mytool status    # Should work (if allowed)
-wsh exec mytool delete    # Should be denied (if deny by default)
+wsh check mytool status        # Should pass (low risk, allow)
+wsh check mytool delete        # Should fail (high risk, deny)
+wsh check mytool push --force  # Should fail (if force-push is deny)
+wsh check mytool some-random   # Should pass (catch-all)
 ```
 
 ## Patterns to Follow
 
 ### Standard CLI tool (like git, cargo, docker)
 
-Map each subcommand. Split on dangerous flags. Add scopes for remote/target arguments.
+Map each subcommand. Split on dangerous flags. Add scopes for remote/target arguments. Include a catch-all.
+
+See `warrant-sh/git/manifest.toml` for a comprehensive example.
 
 ### Programs allowlist (like coreutils)
 
@@ -330,17 +455,76 @@ Use `match = []` with `capability = "policy.environment_strip"` and `scope_defau
 
 Map the agent's subcommands. Use `deny_flags` to block unsafe modes (e.g. `--yolo`). See `warrant-sh/codex`.
 
+### Policy inspection tool (like wsh)
+
+Allow read-only informational commands (`check`, `explain`, `status`). Deny admin commands (`lock`, `setup`, `pull`). Deny the catch-all too — unknown wsh subcommands shouldn't be allowed by default. See `warrant-sh/wsh`.
+
 ## Common Mistakes
 
-1. **Don't invent capabilities that don't exist.** Only map real subcommands and flags. The manifest is factual.
-2. **Don't set everything to `deny`.** Defaults should reflect reasonable security posture. Read-only commands are `allow`. Destructive ones are `deny`.
-3. **Don't forget `strip_env`.** Many tools honour environment variables that override config. Check the tool's docs for `*_CONFIG`, `*_OPTS`, `*_PATH` variables.
-4. **Don't skip flag-based splits.** `git push` and `git push --force` are fundamentally different risk levels. Treat them as different capabilities.
-5. **Don't over-scope.** Only add scopes where policy will realistically need to filter by target. Not every argument needs a scope.
+### 1. Missing catch-all
+
+The most common and most damaging mistake. Without it, any unlisted subcommand is silently denied. Always add `match = []` as the last entry.
+
+```toml
+# ❌ "mytool info" will be denied — no entry matches it
+[[commands]]
+match = ["push"]
+capability = "mytool.push"
+default = "allow"
+
+# ✅ "mytool info" falls through to the catch-all
+[[commands]]
+match = ["push"]
+capability = "mytool.push"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "mytool.other"
+default = "allow"
+```
+
+### 2. Inventing capabilities that don't exist
+
+Only map real subcommands and flags. The manifest is factual.
+
+### 3. Setting everything to deny
+
+Defaults should reflect reasonable security posture. Read-only commands are `allow`. Only destructive, irreversible, or security-sensitive commands are `deny`.
+
+### 4. Forgetting strip_env
+
+Many tools honour environment variables that override config. Check the tool's docs for `*_CONFIG`, `*_OPTS`, `*_PATH` variables. If they can redirect execution or change configuration, strip them.
+
+### 5. Skipping flag-based splits
+
+`git push` and `git push --force` are fundamentally different risk levels. Treat them as different capabilities.
+
+### 6. Over-scoping
+
+Only add scopes where policy will realistically need to filter by target. Not every argument needs a scope.
+
+### 7. Missing scope_descriptions
+
+When you add scopes, always include `scope_descriptions` and `scope_examples`. Without them, `wsh explain` output is opaque and agents can't understand what they're being asked to allow.
+
+```toml
+# ❌ Scope with no context
+args = { remote = 1, branch = 2 }
+
+# ✅ Scope with descriptions and examples
+args = { remote = 1, branch = 2 }
+scope_descriptions = { remote = "Which remote to push to", branch = "Which branches can be pushed" }
+scope_examples = { remote = ["origin", "upstream"], branch = ["main", "release/*"] }
+```
+
+### 8. Catch-all not last
+
+The catch-all must be the final `[[commands]]` entry. Entries are matched in order — if the catch-all comes first, specific entries below it will never match.
 
 ## Reference
 
 - **Full specification:** `spec/manifest-v1.md` in this repo
-- **Example manifests:** `warrant-sh/git/`, `warrant-sh/cargo/`, `warrant-sh/codex/`
+- **Example manifests:** `warrant-sh/git/`, `warrant-sh/cargo/`, `warrant-sh/gh/`, `warrant-sh/wsh/`
 - **Policy engine:** [warrant-core](https://github.com/warrant-sh/warrant-core)
 - **CLI:** [warrant-shell](https://github.com/warrant-sh/warrant-shell)
