@@ -4,7 +4,7 @@ id = "warrant-sh/cargo"
 tool = "cargo"
 tool_version = ">=1.70"
 manifest_version = "1.0.0"
-summary = "Cargo capability map"
+summary = "Rust package manager — build, test, run, publish, install. Denylist-checked dependencies, publish denied by default."
 license = "CC0-1.0"
 source = "https://github.com/rust-lang/cargo"
 
@@ -75,6 +75,7 @@ match = ["build"]
 capability = "cargo.build"
 description = "Compile the current package"
 risk = "low"
+default = "allow"
 options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
 scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to build" }
@@ -84,6 +85,7 @@ match = ["test"]
 capability = "cargo.test"
 description = "Run the project's test suite"
 risk = "low"
+default = "allow"
 options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
 scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to test" }
@@ -93,6 +95,7 @@ match = ["run"]
 capability = "cargo.run"
 description = "Build and execute a binary from the project"
 risk = "moderate"
+default = "allow"
 options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { manifest = ["./Cargo.toml"], package = ["my-crate"] }
 scope_descriptions = { manifest = "Path to Cargo.toml", package = "Which package to run" }
@@ -102,6 +105,7 @@ match = ["check"]
 capability = "cargo.check"
 description = "Check the project for errors without producing binaries"
 risk = "low"
+default = "allow"
 options = { manifest = { names = ["--manifest-path"], forms = ["separate", "equals"] }, target = { names = ["--target"], forms = ["separate", "equals"] }, package = { names = ["-p", "--package"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { manifest = ["./Cargo.toml"], target = ["x86_64-unknown-linux-gnu"], package = ["my-crate"] }
 scope_descriptions = { manifest = "Path to Cargo.toml", target = "Compilation target triple", package = "Which package to check" }
@@ -111,12 +115,14 @@ match = ["clippy"]
 capability = "cargo.clippy"
 description = "Run the Clippy linter"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["fmt"]
 capability = "cargo.fmt"
 description = "Format source code with rustfmt"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["publish"]
@@ -143,12 +149,14 @@ match = ["update"]
 capability = "cargo.update"
 description = "Update dependencies in Cargo.lock"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["add"]
 capability = "cargo.add"
 description = "Add a dependency to Cargo.toml"
 risk = "low"
+default = "allow"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
 scope_examples = { packages = ["serde", "tokio@1"] }
 scope_descriptions = { packages = "Which crates to add as dependencies" }

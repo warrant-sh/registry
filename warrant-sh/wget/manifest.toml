@@ -4,7 +4,7 @@ id = "warrant-sh/wget"
 tool = "wget"
 tool_version = ">=1.21"
 manifest_version = "1.0.0"
-summary = "wget network and download capability map"
+summary = "wget HTTP client — fetch, download. Config, post-data, and cookie flags denied. Hostname-scoped."
 license = "CC0-1.0"
 source = "https://www.gnu.org/software/wget/"
 
@@ -31,22 +31,15 @@ default = "allow"
 
 [[commands]]
 match = []
-capability = "network.request"
-label = "HTTP Request"
-description = "Fetch content from a remote server"
-risk = "moderate"
-scope = { key = "hosts", from = "url_args", transform = "hostname" }
-scope_descriptions = { hosts = "Allowed destination hostnames" }
-
-[[commands]]
-match = []
 when_any_flags = ["--post-data", "--post-file", "--body-data", "--body-file"]
 capability = "network.upload"
 label = "Upload Data"
 description = "Send request body data to a remote server"
 risk = "high"
+default = "deny"
 scope = { key = "hosts", from = "url_args", transform = "hostname" }
 scope_descriptions = { hosts = "Allowed destination hostnames" }
+scope_examples = { hosts = ["hooks.slack.com", "api.github.com"] }
 
 [[commands]]
 match = []
@@ -55,6 +48,7 @@ capability = "files.write"
 label = "Write to Disk"
 description = "Save downloaded content to a local file"
 risk = "moderate"
+default = "allow"
 options = { paths = { names = ["-O", "--output-document"], forms = ["separate", "attached", "equals"] } }
 scopes = [
   { key = "paths", from = "output_paths", transform = "path" },
@@ -62,3 +56,14 @@ scopes = [
 ]
 scope_examples = { paths = ["./download.tar.gz", "/tmp/output.json"] }
 scope_descriptions = { paths = "Allowed output file paths" }
+
+[[commands]]
+match = []
+capability = "network.request"
+label = "HTTP Request"
+description = "Fetch content from a remote server"
+risk = "moderate"
+default = "allow"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+scope_examples = { hosts = ["github.com", "registry.npmjs.org"] }

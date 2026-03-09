@@ -4,7 +4,7 @@ id = "warrant-sh/npm"
 tool = "npm"
 tool_version = ">=9.0"
 manifest_version = "1.0.0"
-summary = "NPM capability map"
+summary = "NPM package manager — install, run, test, build, audit, publish. Denylist-checked packages, exec and publish denied."
 license = "CC0-1.0"
 source = "https://github.com/npm/cli"
 
@@ -83,12 +83,14 @@ match = ["ci"]
 capability = "npm.ci"
 description = "Clean install from lockfile for reproducible builds"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["run"]
 capability = "npm.run"
 description = "Run a script defined in package.json"
 risk = "moderate"
+default = "allow"
 args = { script = 1 }
 options = { workspace = { names = ["-w", "--workspace"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { script = ["build", "test"], workspace = ["frontend", "packages/*"] }
@@ -99,6 +101,7 @@ match = ["run-script"]
 capability = "npm.run"
 description = "Run a script defined in package.json"
 risk = "moderate"
+default = "allow"
 args = { script = 1 }
 options = { workspace = { names = ["-w", "--workspace"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { script = ["build", "test"], workspace = ["frontend", "packages/*"] }
@@ -133,24 +136,28 @@ match = ["login"]
 capability = "npm.login"
 description = "Authenticate with an NPM registry"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["test"]
 capability = "npm.test"
 description = "Run the project's test script"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["build"]
 capability = "npm.build"
 description = "Run the build script"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["audit"]
 capability = "npm.audit"
 description = "Check dependencies for known vulnerabilities"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = []

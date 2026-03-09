@@ -4,7 +4,7 @@ id = "warrant-sh/pip"
 tool = "pip"
 tool_version = ">=23.0"
 manifest_version = "1.0.0"
-summary = "pip package management capability map"
+summary = "Python package installer — install, uninstall, freeze, download. Denylist-checked against known malicious packages."
 license = "CC0-1.0"
 source = "https://github.com/pypa/pip"
 
@@ -76,6 +76,7 @@ match = ["install"]
 capability = "pip.install"
 description = "Install Python packages from PyPI or a custom index"
 risk = "moderate"
+default = "allow"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
 options = { index = { names = ["-i", "--index-url"], forms = ["separate", "equals", "attached"] }, extra_index = { names = ["--extra-index-url"], forms = ["separate", "equals"] }, requirements = { names = ["-r", "--requirement"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { packages = ["requests", "uvicorn"], index = ["https://pypi.org/simple", "https://pypi.example.com/simple"], extra_index = ["https://download.pytorch.org/whl/cu121"], requirements = ["requirements.txt", "./req/prod.txt"] }
@@ -86,18 +87,21 @@ match = ["uninstall"]
 capability = "pip.uninstall"
 description = "Remove installed Python packages"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["freeze"]
 capability = "pip.freeze"
 description = "List installed packages in requirements format"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["download"]
 capability = "pip.download"
 description = "Download packages without installing them"
 risk = "low"
+default = "allow"
 options = { dest = { names = ["-d", "--dest"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { dest = ["./wheelhouse", "/tmp/pip-cache"] }
 scope_descriptions = { dest = "Destination directory for downloaded packages" }

@@ -4,7 +4,7 @@ id = "warrant-sh/curl"
 tool = "curl"
 tool_version = ">=8.0"
 manifest_version = "1.0.0"
-summary = "curl network and upload capability map"
+summary = "curl HTTP client — fetch, upload, download. Proxy, config, and SOCKS flags denied. Hostname-scoped."
 license = "CC0-1.0"
 source = "https://github.com/curl/curl"
 
@@ -74,22 +74,15 @@ default = "allow"
 
 [[commands]]
 match = []
-capability = "network.request"
-label = "HTTP Request"
-description = "Make an HTTP request to a remote server"
-risk = "moderate"
-scope = { key = "hosts", from = "url_args", transform = "hostname" }
-scope_descriptions = { hosts = "Allowed destination hostnames" }
-
-[[commands]]
-match = []
 when_any_flags = ["-d", "--data", "--data-raw", "--data-binary", "--data-ascii", "--data-urlencode", "--json", "-F", "--form", "-T", "--upload-file"]
 capability = "network.upload"
 label = "Upload Data"
 description = "Send data to a remote server via POST or form upload"
 risk = "high"
+default = "deny"
 scope = { key = "hosts", from = "url_args", transform = "hostname" }
 scope_descriptions = { hosts = "Allowed destination hostnames" }
+scope_examples = { hosts = ["api.github.com", "hooks.slack.com"] }
 
 [[commands]]
 match = []
@@ -98,6 +91,7 @@ capability = "files.write"
 label = "Write to Disk"
 description = "Save downloaded content to a local file"
 risk = "moderate"
+default = "allow"
 options = { paths = { names = ["-o", "--output"], forms = ["separate", "equals", "attached"] } }
 scopes = [
   { key = "paths", from = "output_paths", transform = "path" },
@@ -105,3 +99,14 @@ scopes = [
 ]
 scope_examples = { paths = ["./download.tar.gz", "/tmp/output.json"] }
 scope_descriptions = { paths = "Allowed output file paths" }
+
+[[commands]]
+match = []
+capability = "network.request"
+label = "HTTP Request"
+description = "Make an HTTP request to a remote server"
+risk = "moderate"
+default = "allow"
+scope = { key = "hosts", from = "url_args", transform = "hostname" }
+scope_descriptions = { hosts = "Allowed destination hostnames" }
+scope_examples = { hosts = ["api.github.com", "registry.npmjs.org"] }

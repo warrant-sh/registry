@@ -4,7 +4,7 @@ id = "warrant-sh/docker"
 tool = "docker"
 tool_version = ">=25.0"
 manifest_version = "1.0.0"
-summary = "Docker runtime and image capability map"
+summary = "Docker container runtime — build, pull, push, run, exec, compose. Privileged and host-network modes denied."
 license = "CC0-1.0"
 source = "https://github.com/docker/cli"
 
@@ -71,6 +71,7 @@ match = ["build"]
 capability = "docker.build"
 description = "Build a Docker image from a Dockerfile"
 risk = "moderate"
+default = "allow"
 scope = { key = "context", from = "arg_last", transform = "path" }
 options = { dockerfile = { names = ["-f", "--file"], forms = ["separate", "equals", "attached"] }, tags = { names = ["-t", "--tag"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { context = [".", "./services/api"], dockerfile = ["Dockerfile", "./docker/Dockerfile.prod"], tags = ["myorg/api:latest"] }
@@ -81,6 +82,7 @@ match = ["pull"]
 capability = "docker.pull"
 description = "Download an image from a registry"
 risk = "low"
+default = "allow"
 scope = { key = "images", from = "arg_rest", transform = "literal" }
 scope_examples = { images = ["alpine:latest", "ghcr.io/org/app:1.2.3"] }
 scope_descriptions = { images = "Which images to pull" }
@@ -90,6 +92,7 @@ match = ["push"]
 capability = "docker.push"
 description = "Upload an image to a registry"
 risk = "high"
+default = "deny"
 scope = { key = "images", from = "arg_rest", transform = "literal" }
 scope_examples = { images = ["myorg/api:latest", "ghcr.io/org/app:1.2.3"] }
 scope_descriptions = { images = "Which images to push" }
@@ -99,6 +102,7 @@ match = ["run"]
 capability = "docker.run"
 description = "Create and start a new container"
 risk = "high"
+default = "allow"
 scopes = [
   { key = "image", from = "arg_image", transform = "literal" },
   { key = "volume_sources", from = "volume_sources", transform = "path" },
@@ -126,6 +130,7 @@ match = ["exec"]
 capability = "docker.exec"
 description = "Run a command inside a running container"
 risk = "moderate"
+default = "allow"
 args = { container = 1 }
 scope_examples = { container = ["api-container", "db-1"] }
 scope_descriptions = { container = "Target container name or ID" }
@@ -148,6 +153,7 @@ match = ["compose"]
 capability = "docker.compose"
 description = "Manage multi-container applications with Docker Compose"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = []

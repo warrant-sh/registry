@@ -6,19 +6,19 @@ updated = "2026-02-27T09:30:00Z"
 id = "warrant-sh/cargo"
 path = "warrant-sh/cargo/manifest.toml"
 version = "1.0.0"
-hash = "sha256:7e4bb6ba9b4c85b40004ab6efa1fd09219891a9e7515d8316bc2771480ff0b2e"
+hash = "sha256:344f5a4a4da1967aeca96aec52d9eace09fb338d633c96762a2b6f82afa1543f"
 
 [[manifests]]
 id = "warrant-sh/claude"
 path = "warrant-sh/claude/manifest.toml"
 version = "1.0.0"
-hash = "sha256:81f7340b25b756b4d5c12a29fc95c8d6c8b867485f00869d17b3c6deb300639e"
+hash = "sha256:6cab8a54d6a43993933e8d7ed7e83629315438859ff470b8b6eaf311da52cd02"
 
 [[manifests]]
 id = "warrant-sh/codex"
 path = "warrant-sh/codex/manifest.toml"
 version = "1.0.0"
-hash = "sha256:e8f82765c6c1caec8792f6d05bb57a07f140ebc57bcb110792915700b857bf87"
+hash = "sha256:20bd92638dc1eecdf64e4b883c3a3cc19eca89a51e5275b35da0367a86d792ff"
 
 [[manifests]]
 id = "warrant-sh/coreutils"
@@ -30,7 +30,7 @@ hash = "sha256:d717f580ce5b2183d27ca5e86aae7ce79761b5f0c70068e69722ff688ae784d9"
 id = "warrant-sh/curl"
 path = "warrant-sh/curl/manifest.toml"
 version = "1.0.0"
-hash = "sha256:052334d6deebe4e04cb820a14e33f6f3778bd8be59a1252d8728c9a21a683a35"
+hash = "sha256:6beade16df077b2c0b1d85c95791eb0225b048e1a57947b21f9b80a8af716297"
 
 [[manifests]]
 id = "warrant-sh/dangerous-patterns"
@@ -42,43 +42,43 @@ hash = "sha256:0f952318b781719a807b6f46ddc2cb8a2674bca766faf07fc014304d102fc478"
 id = "warrant-sh/docker"
 path = "warrant-sh/docker/manifest.toml"
 version = "1.0.0"
-hash = "sha256:d92995eb76dd351802c5cd340953cdb3bbccbc1e3ea1bcd6322ffde73871cb01"
+hash = "sha256:238ae52a497a52f830484b6170e01acdc2a9d163d11576805cc90147d07959ab"
 
 [[manifests]]
 id = "warrant-sh/gh"
 path = "warrant-sh/gh/manifest.toml"
 version = "1.0.0"
-hash = "sha256:49601f992159dd8948a124d83e06adf465b5a929c04d77359f7410d9fe8a2b94"
+hash = "sha256:971181c9e8c9e245b4d9cb508c6c76d8ba3193c72fbca9ddf0c40f51cdfe49aa"
 
 [[manifests]]
 id = "warrant-sh/git"
 path = "warrant-sh/git/manifest.toml"
 version = "1.0.0"
-hash = "sha256:485a29dde03896fc9e5dcf75670a3d1e3a133993ea538b605d4437fe69d21101"
+hash = "sha256:b7ac9e462e2d51551a67714613bb18c56fcd059bedc5d01d006a8908aeb2fa4f"
 
 [[manifests]]
 id = "warrant-sh/go"
 path = "warrant-sh/go/manifest.toml"
 version = "1.0.0"
-hash = "sha256:7e33229cb66c96d5f37c878cb5182db8dfa4d76b592b808cbe513398def53613"
+hash = "sha256:0c7566840766994b76bb682c800ace227e863be181e74674344cd7c7edebfc67"
 
 [[manifests]]
 id = "warrant-sh/gog"
 path = "warrant-sh/gog/manifest.toml"
 version = "1.0.0"
-hash = "sha256:19acc4ad7807c5a31a78576537c92e6f7dfe29dfc11a9514bfce764de2f50f46"
+hash = "sha256:465b8818b0a564f455f4e912fb9674d8af336240e0ef97f0e0c3e390c1ba656a"
 
 [[manifests]]
 id = "warrant-sh/node"
 path = "warrant-sh/node/manifest.toml"
 version = "1.0.0"
-hash = "sha256:5fa14d99f1306a2f7f01d0878492efa9882044ec52d9f5f3394deb0f66e38ac0"
+hash = "sha256:95e8b46b440308abdf2f9a69bc5df33c41083c994368b459c7ae431f19a427b1"
 
 [[manifests]]
 id = "warrant-sh/npm"
 path = "warrant-sh/npm/manifest.toml"
 version = "1.0.0"
-hash = "sha256:ebcf37bb7e1dd7517ba088d52e9daf3973b42e56cb1c4eeabde0c0f7f3ecc553"
+hash = "sha256:da4e15018b06ed1f97171b61f3f34b8d07ee4df1c3bb1a8a9109861b4720b3e0"
 
 [[manifests]]
 id = "warrant-sh/python"
@@ -90,7 +90,7 @@ hash = "sha256:a9d1acdf058f380c29752420bc0636284544c8ec7e5f0a5fddb3fe5ca36c28ee"
 id = "warrant-sh/pip"
 path = "warrant-sh/pip/manifest.toml"
 version = "1.0.0"
-hash = "sha256:d93e4286c6536757d5182a97c70c29e08dd959fa9cdc72b18555723b7725e1f0"
+hash = "sha256:0f6c23a387f48110780c59e687690f047572a88e55b2776b0c66a13149ae027f"
 
 [[manifests]]
 id = "warrant-sh/ruby"
@@ -114,7 +114,7 @@ hash = "sha256:2b5585b2d1de64a5a8c3658010a257737435abd699e158bce6a3ee25c8987534"
 id = "warrant-sh/ssh"
 path = "warrant-sh/ssh/manifest.toml"
 version = "1.0.0"
-hash = "sha256:d5746eef7b0d36ee0d7eb1cf79abbb6e67b0ce1727e9cdb50e2f93a9ec445d74"
+hash = "sha256:4e04c256ef117bfe64a0b22ba1e47aa1a0f895ce440cf82f434ac10f3757b04e"
 
 [[manifests]]
 id = "warrant-sh/strict-paths"
@@ -126,19 +126,19 @@ hash = "sha256:c41f065244ab62d9946dc3b229689affa7dca443ec23dc19cb680c4a8e09b8d7"
 id = "warrant-sh/tmux"
 path = "warrant-sh/tmux/manifest.toml"
 version = "1.0.0"
-hash = "sha256:fd3a6a168b710fde961141780adfc384048778afa22fd04fa9cac8ae64948ce5"
+hash = "sha256:147914d80fe7bc416d85d38e8fe993984df460055aeb3889e9201a308cc6a6e0"
 
 [[manifests]]
 id = "warrant-sh/uv"
 path = "warrant-sh/uv/manifest.toml"
 version = "1.0.0"
-hash = "sha256:ec742f08edf5d6dad0722cdf83688ace0f44494e32588d1e4d696c3a7dd11942"
+hash = "sha256:9aecd5082a4b9399ee1cb4200b453ad72bcb0b87f2289473fceba86e435b10b2"
 
 [[manifests]]
 id = "warrant-sh/wget"
 path = "warrant-sh/wget/manifest.toml"
 version = "1.0.0"
-hash = "sha256:9bd4eb63982e296a7f1bf608336663e1c056d703d29c0204434ae96deaa8e5e0"
+hash = "sha256:27a4398b9dd4b2b903afd54d6c2f0cce0d4ee499a5fa6de472c7f1b0e3e4cd4f"
 
 [[manifests]]
 id = "warrant-sh/wsh"

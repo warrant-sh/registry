@@ -4,7 +4,7 @@ id = "warrant-sh/git"
 tool = "git"
 tool_version = ">=2.30"
 manifest_version = "1.0.0"
-summary = "Git capability map"
+summary = "Git version control — clone, push, pull, branching, history, remotes. Force-push and remote-add split as high-risk."
 license = "CC0-1.0"
 source = "https://github.com/git/git"
 

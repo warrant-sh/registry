@@ -94,6 +94,8 @@ description = "Execute npm packages without installing"
 risk = "high"
 default = "deny"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["eslint", "create-react-app"] }
+scope_descriptions = { packages = "Which packages to execute" }
 
 [[commands]]
 match = ["yarn"]
@@ -102,6 +104,8 @@ description = "Yarn package manager"
 risk = "moderate"
 default = "allow"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["add lodash", "remove express"] }
+scope_descriptions = { packages = "Arguments passed to yarn" }
 
 [[commands]]
 match = ["pnpm"]
@@ -110,6 +114,8 @@ description = "pnpm package manager"
 risk = "moderate"
 default = "allow"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
+scope_examples = { packages = ["add lodash", "remove express"] }
+scope_descriptions = { packages = "Arguments passed to pnpm" }
 
 [[commands]]
 match = ["bun"]

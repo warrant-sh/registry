@@ -4,7 +4,7 @@ id = "warrant-sh/gh"
 tool = "gh"
 tool_version = "*"
 manifest_version = "1.0.0"
-summary = "GitHub CLI capability map"
+summary = "GitHub CLI — PRs, issues, releases, Actions, API. Repo create/delete and auth changes denied."
 license = "CC0-1.0"
 source = "https://cli.github.com/"
 

@@ -4,7 +4,7 @@ id = "warrant-sh/go"
 tool = "go"
 tool_version = ">=1.20"
 manifest_version = "1.0.0"
-summary = "Go capability map"
+summary = "Go toolchain — build, test, run, get, mod. Denylist-checked modules, install denied by default."
 license = "CC0-1.0"
 source = "https://go.dev/"
 
@@ -81,6 +81,7 @@ match = ["build"]
 capability = "go.build"
 description = "Compile Go packages and dependencies"
 risk = "low"
+default = "allow"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
 options = { output = { names = ["-o"], forms = ["separate", "attached"] } }
 scope_examples = { modules = ["./...", "./cmd/api"], output = ["./bin/app"] }
@@ -91,6 +92,7 @@ match = ["test"]
 capability = "go.test"
 description = "Run tests for Go packages"
 risk = "low"
+default = "allow"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
 scope_examples = { modules = ["./...", "./pkg/service"] }
 scope_descriptions = { modules = "Which packages to test" }
@@ -100,6 +102,7 @@ match = ["get"]
 capability = "go.get"
 description = "Download and install modules and dependencies"
 risk = "moderate"
+default = "allow"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
 scope_examples = { modules = ["github.com/pkg/errors", "example.com/mod@v1.2.3"] }
 scope_descriptions = { modules = "Which modules to download" }
@@ -110,12 +113,14 @@ capability = "go.mod"
 label = "Go Modules"
 description = "Manage go.mod and module dependencies"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["run"]
 capability = "go.run"
 description = "Compile and run a Go program"
 risk = "moderate"
+default = "allow"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
 scope_examples = { modules = ["./cmd/server", "main.go"] }
 scope_descriptions = { modules = "Go files or packages to run" }
@@ -127,6 +132,8 @@ description = "Compile and install Go packages"
 risk = "moderate"
 default = "deny"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
+scope_examples = { modules = ["golang.org/x/tools/gopls@latest"] }
+scope_descriptions = { modules = "Which modules to install" }
 
 [[commands]]
 match = []

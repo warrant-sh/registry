@@ -4,7 +4,7 @@ id = "warrant-sh/tmux"
 tool = "tmux"
 tool_version = ">=3.0"
 manifest_version = "1.0.0"
-summary = "Terminal multiplexer session management"
+summary = "tmux terminal multiplexer — sessions, panes, windows. send-keys and run-shell denied."
 license = "CC0-1.0"
 source = "https://github.com/tmux/tmux"
 
@@ -58,24 +58,28 @@ match = ["new-session"]
 capability = "tmux.session"
 description = "Create a new tmux session"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["kill-session"]
 capability = "tmux.session"
 description = "Kill a tmux session"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["has-session"]
 capability = "tmux.session"
 description = "Check if a session exists"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["list-sessions"]
 capability = "tmux.session"
 description = "List tmux sessions"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["send-keys"]
@@ -103,30 +107,35 @@ match = ["capture-pane"]
 capability = "tmux.interact"
 description = "Capture pane contents"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["attach-session"]
 capability = "tmux.session"
 description = "Attach to a session"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["detach-client"]
 capability = "tmux.session"
 description = "Detach from a session"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["select-pane"]
 capability = "tmux.interact"
 description = "Select a pane"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["split-window"]
 capability = "tmux.interact"
 description = "Split a window into panes"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = []

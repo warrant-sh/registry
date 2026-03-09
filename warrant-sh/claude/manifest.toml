@@ -54,13 +54,6 @@ description = "Show CLI version information"
 risk = "low"
 default = "allow"
 
-[[commands]]
-match = []
-capability = "claude.interactive"
-description = "Launch Claude Code interactive REPL"
-risk = "low"
-default = "allow"
-
 # Print mode (non-interactive, SDK)
 # claude -p "query" — runs and exits
 [[commands]]
@@ -86,30 +79,6 @@ match = []
 when_any_flags = ["-r", "--resume"]
 capability = "claude.resume"
 description = "Resume a session by ID or name"
-risk = "low"
-default = "allow"
-
-# Self-update
-[[commands]]
-match = ["update"]
-capability = "claude.update"
-description = "Update Claude Code to the latest version"
-risk = "low"
-default = "allow"
-
-# List configured agents
-[[commands]]
-match = ["agents"]
-capability = "claude.agents"
-description = "List all configured subagents"
-risk = "low"
-default = "allow"
-
-# MCP server management
-[[commands]]
-match = ["mcp"]
-capability = "claude.mcp"
-description = "Configure Model Context Protocol servers (list, add, remove)"
 risk = "low"
 default = "allow"
 
@@ -145,6 +114,38 @@ match = []
 when_any_flags = ["--init", "--init-only"]
 capability = "claude.init"
 description = "Run initialization hooks"
+risk = "low"
+default = "allow"
+
+# Self-update
+[[commands]]
+match = ["update"]
+capability = "claude.update"
+description = "Update Claude Code to the latest version"
+risk = "low"
+default = "allow"
+
+# List configured agents
+[[commands]]
+match = ["agents"]
+capability = "claude.agents"
+description = "List all configured subagents"
+risk = "low"
+default = "allow"
+
+# MCP server management
+[[commands]]
+match = ["mcp"]
+capability = "claude.mcp"
+description = "Configure Model Context Protocol servers (list, add, remove)"
+risk = "low"
+default = "allow"
+
+# Interactive REPL (bare claude invocation with no subcommand or flags)
+[[commands]]
+match = []
+capability = "claude.interactive"
+description = "Launch Claude Code interactive REPL"
 risk = "low"
 default = "allow"
 

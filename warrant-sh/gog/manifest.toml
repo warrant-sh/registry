@@ -58,12 +58,14 @@ match = ["gmail", "list"]
 capability = "gog.gmail.list"
 description = "List emails"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["gmail", "read"]
 capability = "gog.gmail.read"
 description = "Read email content"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["gmail", "send"]
@@ -77,72 +79,84 @@ match = ["gmail", "reply"]
 capability = "gog.gmail.reply"
 description = "Reply to an email"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["gmail", "forward"]
 capability = "gog.gmail.forward"
 description = "Forward an email"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["gmail", "trash"]
 capability = "gog.gmail.trash"
 description = "Move email to trash"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["gmail", "label"]
 capability = "gog.gmail.label"
 description = "Manage email labels"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["calendar", "list"]
 capability = "gog.calendar.list"
 description = "List calendar events"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["calendar", "get"]
 capability = "gog.calendar.get"
 description = "Get calendar event details"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["calendar", "create"]
 capability = "gog.calendar.create"
 description = "Create a calendar event"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["calendar", "delete"]
 capability = "gog.calendar.delete"
 description = "Delete a calendar event"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["contacts", "list"]
 capability = "gog.contacts.list"
 description = "List contacts"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["contacts", "get"]
 capability = "gog.contacts.get"
 description = "Get contact details"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["drive", "list"]
 capability = "gog.drive.list"
 description = "List Drive files"
 risk = "low"
+default = "allow"
 
 [[commands]]
 match = ["drive", "download"]
 capability = "gog.drive.download"
 description = "Download a file from Drive"
 risk = "moderate"
+default = "allow"
 
 [[commands]]
 match = ["drive", "upload"]
