@@ -20,6 +20,7 @@ include = [
   "warrant-sh/npm",
   "warrant-sh/pip",
   "warrant-sh/codex",
+  "warrant-sh/wsh",
   "warrant-sh/dangerous-patterns",
   "warrant-sh/sanitize-env",
 ]

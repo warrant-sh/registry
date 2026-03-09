@@ -22,6 +22,7 @@ include = [
   "warrant-sh/git",
   "warrant-sh/gh",
   "warrant-sh/ssh",
+  "warrant-sh/wsh",
   "warrant-sh/dangerous-patterns",
   "warrant-sh/sanitize-env",
   "warrant-sh/strict-paths",

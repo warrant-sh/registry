@@ -1,0 +1,130 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/wsh"
+tool = "wsh"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Warrant shell — policy inspection and diagnostics"
+license = "CC0-1.0"
+source = "https://warrant.sh"
+
+[transforms]
+supported = ["literal"]
+
+# --- Read-only / informational commands ---
+
+[[commands]]
+match = ["check"]
+capability = "wsh.check"
+description = "Check if a command is allowed by the current policy"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["explain"]
+capability = "wsh.explain"
+description = "Explain why a command was allowed or denied"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["status"]
+capability = "wsh.status"
+description = "Show warrant status and configuration"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["version"]
+capability = "wsh.version"
+description = "Show wsh version"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--version"]
+capability = "wsh.version"
+description = "Show wsh version"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["--help"]
+capability = "wsh.help"
+description = "Show help"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["-h"]
+capability = "wsh.help"
+description = "Show help"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["help"]
+capability = "wsh.help"
+description = "Show help"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["audit"]
+capability = "wsh.audit"
+description = "View audit log"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["guard"]
+capability = "wsh.guard"
+description = "Run the shell guard policy check"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["package-check"]
+capability = "wsh.package_check"
+description = "Check a package against the denylist"
+risk = "low"
+default = "allow"
+
+# --- Administrative commands (denied by default) ---
+
+[[commands]]
+match = ["lock"]
+capability = "wsh.lock"
+description = "Sign and install a warrant from draft"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["setup"]
+capability = "wsh.setup"
+description = "Set up warrant for an agent"
+risk = "high"
+default = "deny"
+
+[[commands]]
+match = ["pull"]
+capability = "wsh.pull"
+description = "Pull manifests from the registry"
+risk = "moderate"
+default = "deny"
+
+[[commands]]
+match = ["package-update"]
+capability = "wsh.package_update"
+description = "Update package denylists"
+risk = "moderate"
+default = "deny"
+
+# --- Catch-all ---
+
+[[commands]]
+match = []
+capability = "wsh.other"
+description = "Any other wsh subcommand"
+risk = "moderate"
+default = "deny"

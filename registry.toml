@@ -140,17 +140,23 @@ path = "warrant-sh/wget/manifest.toml"
 version = "1.0.0"
 hash = "sha256:9bd4eb63982e296a7f1bf608336663e1c056d703d29c0204434ae96deaa8e5e0"
 
+[[manifests]]
+id = "warrant-sh/wsh"
+path = "warrant-sh/wsh/manifest.toml"
+version = "1.0.0"
+hash = "sha256:6a848654e8476de4d588d6bae9abacfda90d0f135557e5e786abcff3ab34dc0e"
+
 [[bundles]]
 id = "codex"
 path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:08a01f290af195ee99cb7123554d21030f9272d87d4f54b7a4f5791fd37dbab2"
+hash = "sha256:cd03c69956bef1c9df2edbb40baa79cea23974f359f7d34f6bdd968101172711"
 
 [[bundles]]
 id = "claude"
 path = "bundles/claude.toml"
 version = "1.0.0"
-hash = "sha256:a73c7f46867286c4a032c9e3d49b37c25ae9fcf32b3db62d73a5c957e73b2e24"
+hash = "sha256:7e68266e0a3ad57bccb0181e581365b24b6f6897a41ea306b2a4f531bc77d084"
 
 [[bundles]]
 id = "python"
@@ -174,7 +180,7 @@ hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
 id = "github"
 path = "bundles/github.toml"
 version = "1.0.0"
-hash = "sha256:d7349aa3a5d0bdcedee66d17a0a009a8db7b818507b6b11757f7ff08b9d7c62c"
+hash = "sha256:c8c77af8c878fa93286c8806f12c40d4e71aa4ee67e0a0ecc8a41f6932fefe0a"
 
 [[bundles]]
 id = "go"
