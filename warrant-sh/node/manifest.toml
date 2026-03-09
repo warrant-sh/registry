@@ -226,3 +226,10 @@ capability = "node.biome"
 description = "Formatter and linter for web projects"
 risk = "low"
 default = "allow"
+
+[[commands]]
+match = []
+capability = "node.other"
+description = "Any other node subcommand not explicitly listed"
+risk = "low"
+default = "allow"

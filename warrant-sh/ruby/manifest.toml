@@ -168,3 +168,10 @@ capability = "ruby.solargraph"
 description = "Ruby language server"
 risk = "low"
 default = "allow"
+
+[[commands]]
+match = []
+capability = "ruby.other"
+description = "Any other ruby subcommand not explicitly listed"
+risk = "low"
+default = "allow"

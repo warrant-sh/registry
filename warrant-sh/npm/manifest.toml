@@ -151,3 +151,10 @@ match = ["audit"]
 capability = "npm.audit"
 description = "Check dependencies for known vulnerabilities"
 risk = "low"
+
+[[commands]]
+match = []
+capability = "npm.other"
+description = "Any other npm subcommand not explicitly listed"
+risk = "low"
+default = "allow"

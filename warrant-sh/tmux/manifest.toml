@@ -127,3 +127,10 @@ match = ["split-window"]
 capability = "tmux.interact"
 description = "Split a window into panes"
 risk = "low"
+
+[[commands]]
+match = []
+capability = "tmux.other"
+description = "Any other tmux subcommand not explicitly listed"
+risk = "low"
+default = "allow"

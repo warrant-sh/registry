@@ -127,3 +127,10 @@ description = "Compile and install Go packages"
 risk = "moderate"
 default = "deny"
 scope = { key = "modules", from = "arg_rest", transform = "literal" }
+
+[[commands]]
+match = []
+capability = "go.other"
+description = "Any other go subcommand not explicitly listed"
+risk = "low"
+default = "allow"

@@ -148,3 +148,10 @@ match = ["compose"]
 capability = "docker.compose"
 description = "Manage multi-container applications with Docker Compose"
 risk = "moderate"
+
+[[commands]]
+match = []
+capability = "docker.other"
+description = "Any other docker subcommand not explicitly listed"
+risk = "low"
+default = "allow"

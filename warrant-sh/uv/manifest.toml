@@ -135,3 +135,10 @@ match = ["pip", "freeze"]
 capability = "uv.pip_freeze"
 description = "List installed packages in requirements format"
 risk = "low"
+
+[[commands]]
+match = []
+capability = "uv.other"
+description = "Any other uv subcommand not explicitly listed"
+risk = "low"
+default = "allow"

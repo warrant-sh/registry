@@ -250,3 +250,169 @@ capability = "git.status"
 description = "Show working tree status"
 risk = "low"
 default = "allow"
+
+# --- Staging & working tree ---
+
+[[commands]]
+match = ["add"]
+capability = "git.add"
+description = "Stage file changes for commit"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rm"]
+capability = "git.rm"
+description = "Remove files from the working tree and index"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["mv"]
+capability = "git.mv"
+description = "Move or rename a file or directory"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["restore"]
+capability = "git.restore"
+description = "Restore working tree files"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["clean"]
+capability = "git.clean"
+description = "Remove untracked files from the working tree"
+risk = "moderate"
+default = "deny"
+
+# --- Branching & navigation ---
+
+[[commands]]
+match = ["switch"]
+capability = "git.switch"
+description = "Switch branches"
+risk = "low"
+default = "allow"
+
+# --- Inspection & read-only ---
+
+[[commands]]
+match = ["show"]
+capability = "git.show"
+description = "Show various types of objects"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["blame"]
+capability = "git.blame"
+description = "Show what revision and author last modified each line"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["rev-parse"]
+capability = "git.rev_parse"
+description = "Parse revision or other git identifiers"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["ls-files"]
+capability = "git.ls_files"
+description = "Show information about files in the index and working tree"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["ls-tree"]
+capability = "git.ls_tree"
+description = "List the contents of a tree object"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["describe"]
+capability = "git.describe"
+description = "Give an object a human-readable name based on tags"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["shortlog"]
+capability = "git.shortlog"
+description = "Summarize git log output"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["grep"]
+capability = "git.grep"
+description = "Search tracked files for a pattern"
+risk = "low"
+default = "allow"
+
+# --- History manipulation ---
+
+[[commands]]
+match = ["cherry-pick"]
+capability = "git.cherry_pick"
+description = "Apply changes from existing commits"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["revert"]
+capability = "git.revert"
+description = "Revert some existing commits"
+risk = "moderate"
+default = "allow"
+
+# --- Patches ---
+
+[[commands]]
+match = ["apply"]
+capability = "git.apply"
+description = "Apply a patch to files"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["am"]
+capability = "git.am"
+description = "Apply patches from a mailbox"
+risk = "moderate"
+default = "allow"
+
+[[commands]]
+match = ["format-patch"]
+capability = "git.format_patch"
+description = "Prepare patches for email submission"
+risk = "low"
+default = "allow"
+
+# --- Repository setup ---
+
+[[commands]]
+match = ["init"]
+capability = "git.init"
+description = "Create an empty git repository"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = ["worktree"]
+capability = "git.worktree"
+description = "Manage multiple working trees"
+risk = "low"
+default = "allow"
+
+[[commands]]
+match = []
+capability = "git.other"
+description = "Any other git subcommand not explicitly listed"
+risk = "low"
+default = "allow"

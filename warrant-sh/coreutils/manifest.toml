@@ -24,6 +24,7 @@ scope_defaults = { programs = [
   "find", "which", "whereis", "whoami", "id", "groups",
   "date", "cal", "uptime", "uname", "hostname",
   "echo", "printf", "true", "false", "yes",
+  "cd", "test", "[",
   "pwd", "realpath", "dirname", "basename",
   "printenv",
   "diff", "cmp", "comm", "sort", "uniq", "tr", "cut", "paste",

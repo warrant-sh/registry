@@ -150,3 +150,10 @@ capability = "gog.drive.upload"
 description = "Upload a file to Drive"
 risk = "high"
 default = "deny"
+
+[[commands]]
+match = []
+capability = "gog.other"
+description = "Any other gog subcommand not explicitly listed"
+risk = "low"
+default = "allow"

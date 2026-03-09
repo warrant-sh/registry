@@ -152,3 +152,10 @@ risk = "low"
 scope = { key = "packages", from = "arg_rest", transform = "literal" }
 scope_examples = { packages = ["serde", "tokio@1"] }
 scope_descriptions = { packages = "Which crates to add as dependencies" }
+
+[[commands]]
+match = []
+capability = "cargo.other"
+description = "Any other cargo subcommand not explicitly listed"
+risk = "low"
+default = "allow"

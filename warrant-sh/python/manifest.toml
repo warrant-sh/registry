@@ -264,3 +264,10 @@ capability = "python.ipython"
 description = "Enhanced interactive Python shell"
 risk = "high"
 default = "allow"
+
+[[commands]]
+match = []
+capability = "python.other"
+description = "Any other python subcommand not explicitly listed"
+risk = "low"
+default = "allow"

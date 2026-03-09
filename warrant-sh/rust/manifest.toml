@@ -194,3 +194,10 @@ capability = "rust.sccache"
 description = "Shared compilation cache"
 risk = "low"
 default = "allow"
+
+[[commands]]
+match = []
+capability = "rust.other"
+description = "Any other rust subcommand not explicitly listed"
+risk = "low"
+default = "allow"

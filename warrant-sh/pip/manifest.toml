@@ -101,3 +101,10 @@ risk = "low"
 options = { dest = { names = ["-d", "--dest"], forms = ["separate", "equals", "attached"] } }
 scope_examples = { dest = ["./wheelhouse", "/tmp/pip-cache"] }
 scope_descriptions = { dest = "Destination directory for downloaded packages" }
+
+[[commands]]
+match = []
+capability = "pip.other"
+description = "Any other pip subcommand not explicitly listed"
+risk = "low"
+default = "allow"
