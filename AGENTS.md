@@ -230,7 +230,7 @@ Forms: `"separate"` = `-b main`, `"equals"` = `--branch=main`, `"attached"` = `-
 
 #### The Catch-All — CRITICAL
 
-**Every manifest that uses subcommand matching MUST have a catch-all entry as the last `[[commands]]` entry.** Without it, any subcommand not explicitly listed will be denied with "no manifest command mapping matched" — even safe, read-only commands.
+**Every manifest that uses subcommand matching MUST have exactly one bare catch-all entry** (`match = []` with NO flag filters). Without it, any subcommand not explicitly listed will be denied with "no manifest command mapping matched" — even safe, read-only commands.
 
 The catch-all matches anything not caught by a more specific entry above it:
 
@@ -246,10 +246,35 @@ default = "allow"
 
 **Why this matters:** If a manifest exists for a tool but doesn't match the specific subcommand, wsh denies the command. Having a partial manifest is *worse* than having no manifest at all. The catch-all prevents this.
 
+**⚠️ Duplicate catch-all trap:** A `match = []` entry *without* any `when_any_flags`/`when_all_flags`/`when_no_flags` is the catch-all. There can only be ONE. If the manifest already has a bare `match = []` for the tool's default invocation (e.g. `codex.interactive` for launching the TUI, or `claude.interactive` for the REPL), that entry *already serves as the catch-all* — do NOT add another `match = []` without flag filters. Having two causes `wsh` to reject the manifest with a "duplicate command claim" error.
+
+Note: `match = []` WITH `when_any_flags` is fine alongside a bare `match = []` — they are distinguished by the flag filter. The rule is: only one entry can have all four fields (`match`, `when_any_flags`, `when_all_flags`, `when_no_flags`) at the same values.
+
+```toml
+# ✅ OK — these are different entries (flag filters distinguish them)
+[[commands]]
+match = []
+when_any_flags = ["-p", "--print"]
+capability = "claude.print"
+
+[[commands]]
+match = []
+capability = "claude.interactive"    # Bare catch-all — only one of these!
+
+# ❌ BROKEN — two bare catch-alls with identical match/flag tuples
+[[commands]]
+match = []
+capability = "codex.interactive"
+
+[[commands]]
+match = []
+capability = "codex.other"           # DUPLICATE — wsh rejects this
+```
+
 **The pattern is:**
 1. Explicitly list high-risk commands with `deny` or scoped controls
 2. Explicitly list commonly-used commands for documentation and granularity
-3. Catch everything else with a `match = []` entry at the bottom
+3. Catch everything else with a `match = []` entry at the bottom (unless one already exists for bare invocation)
 
 ```toml
 # ❌ Bad — missing catch-all. "mytool stats" will be denied even though it's harmless.
@@ -364,7 +389,7 @@ Before committing, check for common errors:
 # Verify TOML is valid
 python3 -c "import tomllib; tomllib.load(open('warrant-sh/mytool/manifest.toml', 'rb')); print('✓ valid TOML')"
 
-# Check required fields
+# Check required fields and no duplicate command claims
 python3 -c "
 import tomllib
 m = tomllib.load(open('warrant-sh/mytool/manifest.toml', 'rb'))
@@ -374,6 +399,17 @@ assert m['manifest']['tool'], 'missing tool'
 cmds = [c for c in m.get('commands', []) if isinstance(c, dict)]
 # Verify catch-all exists (last command has empty match)
 assert any(c.get('match') == [] for c in cmds), 'MISSING CATCH-ALL — add a match=[] entry at the end'
+# Check for duplicate command claims (same match + flag tuple)
+seen = set()
+for c in cmds:
+    key = (
+        tuple(c.get('match', [])),
+        tuple(sorted(c.get('when_any_flags', []))),
+        tuple(sorted(c.get('when_all_flags', []))),
+        tuple(sorted(c.get('when_no_flags', []))),
+    )
+    assert key not in seen, f'DUPLICATE command claim: match={list(key[0])}, when_any_flags={list(key[1])} — wsh will reject this manifest'
+    seen.add(key)
 print('✓ manifest looks good')
 "
 ```
@@ -521,6 +557,10 @@ scope_examples = { remote = ["origin", "upstream"], branch = ["main", "release/*
 ### 8. Catch-all not last
 
 The catch-all must be the final `[[commands]]` entry. Entries are matched in order — if the catch-all comes first, specific entries below it will never match.
+
+### 9. Duplicate catch-all
+
+If the manifest already has a bare `match = []` entry for the tool's default invocation (e.g. `codex.interactive`), do NOT add a second bare `match = []` as a catch-all. The existing bare entry already serves that role. Two entries with the same `match`/`when_any_flags`/`when_all_flags`/`when_no_flags` tuple will cause `wsh` to reject the manifest with "duplicate command claim."
 
 ## Reference
 
