@@ -178,13 +178,8 @@ description = "Evaluate execpolicy rules to test allow/deny behaviour"
 risk = "low"
 default = "allow"
 
-# Catch-all
-[[commands]]
-match = []
-capability = "codex.other"
-description = "Any other codex subcommand not explicitly listed"
-risk = "low"
-default = "allow"
+# Note: bare invocation (match=[]) is covered by codex.interactive above.
+# All known subcommands are listed explicitly; no catch-all needed.
 
 # Dangerous: --yolo mode bypasses all approvals and sandboxing
 [tool_policy]
