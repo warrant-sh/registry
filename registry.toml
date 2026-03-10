@@ -18,7 +18,7 @@ hash = "sha256:6cab8a54d6a43993933e8d7ed7e83629315438859ff470b8b6eaf311da52cd02"
 id = "warrant-sh/codex"
 path = "warrant-sh/codex/manifest.toml"
 version = "1.0.0"
-hash = "sha256:20bd92638dc1eecdf64e4b883c3a3cc19eca89a51e5275b35da0367a86d792ff"
+hash = "sha256:7c212ba70789a3c15e7d146dbfe16c83f0c4dff0f50d5911928e80d8a4344b23"
 
 [[manifests]]
 id = "warrant-sh/coreutils"
