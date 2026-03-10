@@ -150,13 +150,13 @@ hash = "sha256:6a848654e8476de4d588d6bae9abacfda90d0f135557e5e786abcff3ab34dc0e"
 id = "codex"
 path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:b9cb27f305f2155c37ad03dbbb5df8e56bcf131eefc06f8e212aa389477d91a9"
+hash = "sha256:2f66a156ac75b3e548be43409c34e5ed36b7bee1207150433cb6088de663d83e"
 
 [[bundles]]
 id = "claude"
 path = "bundles/claude.toml"
 version = "1.0.0"
-hash = "sha256:7e68266e0a3ad57bccb0181e581365b24b6f6897a41ea306b2a4f531bc77d084"
+hash = "sha256:612f83e702c1863f59a588c2fb90b2713849fe91ef1de593c3166feb3febb119"
 
 [[bundles]]
 id = "python"
