@@ -24,7 +24,7 @@ hash = "sha256:7c212ba70789a3c15e7d146dbfe16c83f0c4dff0f50d5911928e80d8a4344b23"
 id = "warrant-sh/coreutils"
 path = "warrant-sh/coreutils/manifest.toml"
 version = "1.0.0"
-hash = "sha256:d717f580ce5b2183d27ca5e86aae7ce79761b5f0c70068e69722ff688ae784d9"
+hash = "sha256:b49293cfa492b5e2f472128d417960c080e4ed2d2ea06baec2a9c2d87ad0b7f9"
 
 [[manifests]]
 id = "warrant-sh/curl"
@@ -150,7 +150,7 @@ hash = "sha256:6a848654e8476de4d588d6bae9abacfda90d0f135557e5e786abcff3ab34dc0e"
 id = "codex"
 path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:cd03c69956bef1c9df2edbb40baa79cea23974f359f7d34f6bdd968101172711"
+hash = "sha256:b9cb27f305f2155c37ad03dbbb5df8e56bcf131eefc06f8e212aa389477d91a9"
 
 [[bundles]]
 id = "claude"

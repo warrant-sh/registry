@@ -17,8 +17,10 @@ wrap = true
 include = [
   "warrant-sh/coreutils",
   "warrant-sh/git",
+  "warrant-sh/curl",
   "warrant-sh/npm",
   "warrant-sh/pip",
+  "warrant-sh/python",
   "warrant-sh/codex",
   "warrant-sh/wsh",
   "warrant-sh/dangerous-patterns",

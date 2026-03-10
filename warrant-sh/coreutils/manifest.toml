@@ -29,7 +29,7 @@ scope_defaults = { programs = [
   "printenv",
   "diff", "cmp", "comm", "sort", "uniq", "tr", "cut", "paste",
   "grep", "egrep", "fgrep", "rg", "ag",
-  "awk", "sed",
+  "awk", "sed", "jq",
   "tee", "xargs",
   "du", "df",
   "md5sum", "sha256sum", "shasum",
