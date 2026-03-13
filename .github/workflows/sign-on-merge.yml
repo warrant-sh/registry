@@ -1,0 +1,47 @@
+name: Build Index and Sign
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'registry.toml'
+      - 'registry.toml.sig'
+
+permissions:
+  contents: write
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate registry.toml
+        run: bash scripts/build-index.sh
+
+      - name: Sign registry index
+        run: |
+          pip install -q pynacl
+          PRIVATE_KEY_B64="${{ secrets.REGISTRY_SIGNING_KEY }}" python3 - <<'PY'
+          import base64, os
+          from nacl.signing import SigningKey
+          seed = base64.b64decode(os.environ["PRIVATE_KEY_B64"].strip())
+          sk = SigningKey(seed)
+          data = open("registry.toml", "rb").read()
+          sig = sk.sign(data).signature
+          open("registry.toml.sig", "w").write(base64.b64encode(sig).decode() + "\n")
+          sk.verify_key.verify(data, base64.b64decode(open("registry.toml.sig").read().strip()))
+          print("✓ Signed and verified")
+          PY
+
+      - name: Commit signed index
+        run: |
+          git config user.name "warrant-bot"
+          git config user.email "bot@warrant.sh"
+          git add registry.toml registry.toml.sig
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: rebuild and sign registry index"
+            git push
+          fi

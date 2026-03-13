@@ -1,0 +1,14 @@
+name: Validate PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate registry integrity
+        run: bash scripts/validate.sh
