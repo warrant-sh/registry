@@ -32,6 +32,16 @@ wsh manifest pull    # Fetch/update manifests from this registry
 wsh setup            # Pull manifests + configure environment
 ```
 
+## Baseline vs Opt-In
+
+Baseline bundles (`codex`, `claude`) include safe core utilities via `warrant-sh/coreutils`.
+
+Higher-risk tools are explicit opt-in manifests:
+- `warrant-sh/build-tools`
+- `warrant-sh/text-processing`
+- `warrant-sh/npm`
+- `warrant-sh/pip`
+
 ## Licence
 
 MIT

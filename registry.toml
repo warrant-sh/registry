@@ -3,7 +3,13 @@
 
 [registry]
 schema = "warrant.registry.v1"
-updated = "2026-03-13T18:47:04Z"
+updated = "2026-03-13T18:52:29Z"
+
+[[manifests]]
+id = "warrant-sh/build-tools"
+path = "warrant-sh/build-tools/manifest.toml"
+version = "1.0.0"
+hash = "sha256:f0e385529ae189d378ccf159433d16442e588a1bae3a9be99d224da6fa040b85"
 
 [[manifests]]
 id = "warrant-sh/cargo"
@@ -27,7 +33,7 @@ hash = "sha256:7c212ba70789a3c15e7d146dbfe16c83f0c4dff0f50d5911928e80d8a4344b23"
 id = "warrant-sh/coreutils"
 path = "warrant-sh/coreutils/manifest.toml"
 version = "1.0.0"
-hash = "sha256:b49293cfa492b5e2f472128d417960c080e4ed2d2ea06baec2a9c2d87ad0b7f9"
+hash = "sha256:a7b12a639b2b2fa05cb78df7174eb885718d97e4b446680cddad48487da424f0"
 
 [[manifests]]
 id = "warrant-sh/curl"
@@ -126,6 +132,12 @@ version = "1.0.0"
 hash = "sha256:c41f065244ab62d9946dc3b229689affa7dca443ec23dc19cb680c4a8e09b8d7"
 
 [[manifests]]
+id = "warrant-sh/text-processing"
+path = "warrant-sh/text-processing/manifest.toml"
+version = "1.0.0"
+hash = "sha256:117b228bbcb201801d9c47a621e5574a6377e1a0d1a6c22ebb7be53c6f011153"
+
+[[manifests]]
 id = "warrant-sh/tmux"
 path = "warrant-sh/tmux/manifest.toml"
 version = "1.0.0"
@@ -153,13 +165,13 @@ hash = "sha256:6a848654e8476de4d588d6bae9abacfda90d0f135557e5e786abcff3ab34dc0e"
 id = "claude"
 path = "bundles/claude.toml"
 version = "1.0.0"
-hash = "sha256:612f83e702c1863f59a588c2fb90b2713849fe91ef1de593c3166feb3febb119"
+hash = "sha256:40cf78308fc910502434c65f1c1fbf2a56b10ad0c64b410a9e217dc97528abe7"
 
 [[bundles]]
 id = "codex"
 path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:2f66a156ac75b3e548be43409c34e5ed36b7bee1207150433cb6088de663d83e"
+hash = "sha256:bf9ea81410495f2848351bdc4862dc307cc259ec874489fd38a5c118be904806"
 
 [[bundles]]
 id = "github"

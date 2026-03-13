@@ -1,0 +1,23 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/build-tools"
+tool = "build-tools"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Build tools (make, cmake). Opt-in — these can execute arbitrary code via Makefiles and build scripts."
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/build-tools"
+
+[transforms]
+supported = ["literal"]
+
+[[commands]]
+match = []
+capability = "policy.commands_allow"
+label = "Allowed Programs"
+description = "Programs added to the commands allowlist"
+risk = "high"
+default = "allow"
+scope = { key = "programs", from = "arg_rest", transform = "literal" }
+scope_defaults = { programs = ["make", "cmake"] }
+scope_descriptions = { programs = "Programs to add to the commands allowlist" }

@@ -1,0 +1,23 @@
+[manifest]
+schema = "warrant.manifest.v1"
+id = "warrant-sh/text-processing"
+tool = "text-processing"
+tool_version = "*"
+manifest_version = "1.0.0"
+summary = "Programmable text processing (awk). Opt-in — awk can execute subprocesses via system()."
+license = "CC0-1.0"
+source = "https://warrant.sh/manifests/text-processing"
+
+[transforms]
+supported = ["literal"]
+
+[[commands]]
+match = []
+capability = "policy.commands_allow"
+label = "Allowed Programs"
+description = "Programs added to the commands allowlist"
+risk = "moderate"
+default = "allow"
+scope = { key = "programs", from = "arg_rest", transform = "literal" }
+scope_defaults = { programs = ["awk"] }
+scope_descriptions = { programs = "Programs to add to the commands allowlist" }
