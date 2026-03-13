@@ -1,6 +1,9 @@
+# Auto-generated — do not edit manually.
+# Run scripts/build-index.sh to regenerate, or let CI handle it on merge.
+
 [registry]
 schema = "warrant.registry.v1"
-updated = "2026-02-27T09:30:00Z"
+updated = "2026-03-13T18:47:04Z"
 
 [[manifests]]
 id = "warrant-sh/cargo"
@@ -81,16 +84,16 @@ version = "1.0.0"
 hash = "sha256:da4e15018b06ed1f97171b61f3f34b8d07ee4df1c3bb1a8a9109861b4720b3e0"
 
 [[manifests]]
-id = "warrant-sh/python"
-path = "warrant-sh/python/manifest.toml"
-version = "1.0.0"
-hash = "sha256:a9d1acdf058f380c29752420bc0636284544c8ec7e5f0a5fddb3fe5ca36c28ee"
-
-[[manifests]]
 id = "warrant-sh/pip"
 path = "warrant-sh/pip/manifest.toml"
 version = "1.0.0"
 hash = "sha256:0f6c23a387f48110780c59e687690f047572a88e55b2776b0c66a13149ae027f"
+
+[[manifests]]
+id = "warrant-sh/python"
+path = "warrant-sh/python/manifest.toml"
+version = "1.0.0"
+hash = "sha256:a9d1acdf058f380c29752420bc0636284544c8ec7e5f0a5fddb3fe5ca36c28ee"
 
 [[manifests]]
 id = "warrant-sh/ruby"
@@ -147,34 +150,16 @@ version = "1.0.0"
 hash = "sha256:6a848654e8476de4d588d6bae9abacfda90d0f135557e5e786abcff3ab34dc0e"
 
 [[bundles]]
-id = "codex"
-path = "bundles/codex.toml"
-version = "1.0.0"
-hash = "sha256:2f66a156ac75b3e548be43409c34e5ed36b7bee1207150433cb6088de663d83e"
-
-[[bundles]]
 id = "claude"
 path = "bundles/claude.toml"
 version = "1.0.0"
 hash = "sha256:612f83e702c1863f59a588c2fb90b2713849fe91ef1de593c3166feb3febb119"
 
 [[bundles]]
-id = "python"
-path = "bundles/python.toml"
+id = "codex"
+path = "bundles/codex.toml"
 version = "1.0.0"
-hash = "sha256:e0b7228005571e287871abbccc53423eca67c960cf44662cf8051f9301cc7685"
-
-[[bundles]]
-id = "rust"
-path = "bundles/rust.toml"
-version = "1.0.0"
-hash = "sha256:dde772f277424c075df87b91f34c7da300e76cee627143a7d7b74e2d5893233c"
-
-[[bundles]]
-id = "node"
-path = "bundles/node.toml"
-version = "1.0.0"
-hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
+hash = "sha256:2f66a156ac75b3e548be43409c34e5ed36b7bee1207150433cb6088de663d83e"
 
 [[bundles]]
 id = "github"
@@ -188,6 +173,21 @@ path = "bundles/go.toml"
 version = "1.0.0"
 hash = "sha256:01c612d9f86ccddd415cb49940a2e5235a432f8e1cc838885c41478fc63eff35"
 
-[denylists]
-npm_sha256 = "e43d64d36b69b8c59ee69e2f31592203c3558b87ea398b709d8401b176ae1ea7"
-pypi_sha256 = "81bca27f58b1ec0b691554e72b4ebd0a19152b4a1ba17faf516e44c44bee5532"
+[[bundles]]
+id = "node"
+path = "bundles/node.toml"
+version = "1.0.0"
+hash = "sha256:05ff91c813f0c8fc8e3ae0678a251adc77f985a76310f41546ed0a00880aa85e"
+
+[[bundles]]
+id = "python"
+path = "bundles/python.toml"
+version = "1.0.0"
+hash = "sha256:e0b7228005571e287871abbccc53423eca67c960cf44662cf8051f9301cc7685"
+
+[[bundles]]
+id = "rust"
+path = "bundles/rust.toml"
+version = "1.0.0"
+hash = "sha256:dde772f277424c075df87b91f34c7da300e76cee627143a7d7b74e2d5893233c"
+
