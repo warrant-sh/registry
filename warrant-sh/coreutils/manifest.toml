@@ -4,7 +4,7 @@ id = "warrant-sh/coreutils"
 tool = "coreutils"
 tool_version = "*"
 manifest_version = "1.0.0"
-summary = "Allow common system utilities — read-only and low-risk commands"
+summary = "Core system utilities — read-only commands, file operations, text processing. No script executors."
 license = "CC0-1.0"
 source = "https://warrant.sh/manifests/coreutils"
 
@@ -29,7 +29,7 @@ scope_defaults = { programs = [
   "printenv",
   "diff", "cmp", "comm", "sort", "uniq", "tr", "cut", "paste",
   "grep", "egrep", "fgrep", "rg", "ag",
-  "awk", "sed", "jq",
+  "sed", "jq",
   "tee", "xargs",
   "du", "df",
   "md5sum", "sha256sum", "shasum",
@@ -38,6 +38,5 @@ scope_defaults = { programs = [
   "install", "rsync",
   "tar", "zip", "unzip", "gzip", "gunzip", "bzip2", "xz",
   "chmod", "chown", "chgrp",
-  "make", "cmake",
 ] }
 scope_descriptions = { programs = "Programs to add to the commands allowlist" }
