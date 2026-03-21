@@ -1,2 +1,6 @@
 .signing/
 signing/registry-index-signing-key.b64
+CODEX_BRIEF*.md
+CLAUDE_BRIEF*.md
+CODEX_INSTRUCTIONS.md
+CLAUDE_INSTRUCTIONS.md
